@@ -1,6 +1,17 @@
-/* Your styles goes here. */
+$menu-frame-bg: aqua;
+
+@mixin menu-border {
+    >div {
+        background-color: aqua;
+        height: 100%;
+        border-right: 4px solid #00000055;
+        border-left: 4px solid #FFFFFFCC;
+    }
+}
+
 .App {
     display: block;
+    width: 100%;
     height: 100vh;
 
     color: green;
@@ -14,18 +25,12 @@
 
         $frame-width: 256px;
         $frame-height: 144px;
-        $frame-bg: aqua;
         $frame-bw: 16px;
 
         >div {
             @mixin player-border {
-                >div {
-                    background-color: $frame-bg;
-                    height: 100%;
-                    border-right: 4px solid #00000055;
-                    border-left: 4px solid #FFFFFFCC;
-                }
-                
+                @include menu-border;
+
                 >div:hover:before {
                     content: '\A';
                     position: absolute;
@@ -44,7 +49,7 @@
                 border-bottom-right-radius: 0%;
 
                 >div {
-                    border-left-color: $frame-bg;
+                    border-left-color: $menu-frame-bg;
                 }
             }
 
@@ -78,4 +83,72 @@
         }
     }
 
+    .menu {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        border: 1px solid red;
+        width: 100%;
+        height: 100vh;
+
+        &::before {
+            display: inline-block;
+            content: '\A';
+            position: relative;
+            height: 100%;
+        }
+
+        >.options {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+
+            >div#Portrait {
+                background-color: orange;
+                width: 128px;
+                height: 128px;
+            }
+
+            @mixin item {
+                background-color: orange;
+                width: 128px;
+                height: 128px;
+            }
+
+            >div#Attack {
+                @include item;
+            }
+
+            >div#Energy {
+                @include item;
+            }
+
+            >div#Djinn {
+                @include item;
+            }
+
+            >div#Summon {
+                @include item;
+            }
+
+            >div#Defend {
+                @include item;
+            }
+
+
+            >div#Menu-Focused {
+                >div {
+                    @include menu-border;
+                }
+
+                width: 256px;
+                height: 100px;
+                border: 14px solid grey;
+                background-color: #EEEE;
+                border-radius: 8px;
+                border-style: double;
+            }
+        }
+
+    }
 }
