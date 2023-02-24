@@ -1,0 +1,79 @@
+/* Your styles goes here. */
+.App {
+    display: block;
+    height: 100vh;
+
+    color: green;
+    background-color: lightgrey;
+
+    .team {
+        display: flex;
+        flex-direction: row;
+        position: static;
+        float: right;
+
+        $frame-width: 256px;
+        $frame-height: 144px;
+
+        >div {
+            @mixin player-border {
+                >div {
+                    background-color: aqua;
+                    height: 100%;
+                    border-right: 4px solid #00000055;
+                    border-left: 4px solid #FFFFFFCC;
+                }
+                
+                >div:hover:before {
+                    content: '\A';
+                    position: absolute;
+                    width: $frame-width;
+                    height: $frame-height;
+                    background: rgba(0, 0, 0, 0.6);
+                    // opacity: 1;
+                    // transition: all 1s;
+                }
+            }
+
+            &:first-child {
+                @include player-border;
+                border-right: none;
+                border-top-right-radius: 0%;
+                border-bottom-right-radius: 0%;
+
+                >div {
+                    border-left: none;
+                }
+            }
+
+            &:not(:first-child):not(:last-child) {
+                @include player-border;
+                border-left: none;
+                border-top-left-radius: 0%;
+                border-bottom-left-radius: 0%;
+                border-top-right-radius: 0%;
+                border-bottom-right-radius: 0%;
+                border-right: none;
+            }
+
+            &:last-child {
+                @include player-border;
+                border-left: none;
+                border-top-left-radius: 0%;
+                border-bottom-left-radius: 0%;
+
+                >div {
+                    border-right: none;
+                }
+            }
+
+            width: $frame-width;
+            height: $frame-height;
+            border: 14px solid grey;
+            background-color: #EEEE;
+            border-radius: 8px;
+            border-style: double;
+        }
+    }
+
+}
