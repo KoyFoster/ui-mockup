@@ -2,19 +2,49 @@
 import { useState } from 'react';
 import styles from './app.module.scss';
 import './app.scss';
+import menuSheet from '../assets/sprites/Golden-Sun-Menu-Assets.png'
 
 /* Globals */
 const Menu = {
-  keys: ['attack', 'energy', 'djinn', 'summon', 'defend'],
-  attack: 'Attack',
-  energy: 'Energy',
-  djinn: 'Djinn',
-  summon: 'Summon',
-  defend: 'Defend',
+  keys: ['attack', 'energy', 'djinn', 'summon', 'items', 'defend'],
+  attack: {
+    label: 'Attack',
+    icon: '../assets/sprites/attack.jpg',
+  },
+  energy: {
+    label: 'Energy',
+    icon: '',
+  },
+  djinn: {
+    label: 'Djinn',
+    icon: '../assets/sprites/djinn.jpg',
+  },
+  summon: {
+    label: 'Summon',
+    icon: '../assets/sprites/summon.jpg',
+  },
+  items: {
+    label: 'Items',
+    icon: '../assets/sprites/items.jpg',
+  },
+  defend: {
+    label: 'defend',
+    icon: '../assets/sprites/defend.jpg',
+  },
 } as {
-  [key: string]: string | string[];
+  [key: string]: { label: string; icon: string } | string[];
   keys: string[];
 };
+
+// const map: [12, 134, 24, 24];
+// function getSprite(map: [number,number,number,number]) {
+//   const canvas = document.createElement('canvas');
+//   var ctx = canvas?.getContext("2d");
+//   ctx?.drawImage(menuSheet, 10, 10);
+
+//   return result;
+// }
+
 
 export function App() {
   const [selected, setSelected] = useState('');
@@ -23,42 +53,56 @@ export function App() {
     <div className="App">
       <div className="team">
         <div id="Koy">
-          <div>Koy</div>
+          <div>
+            <div>Koy</div>
+          </div>
         </div>
         <div id="Garet">
-          <div>Garet</div>
+          <div>
+            <div>Garet</div>
+          </div>
         </div>
         <div id="Ivan">
-          <div>Ivan</div>
+          <div>
+            <div>Ivan</div>
+          </div>
         </div>
         <div id="Mary">
-          <div>Mary</div>
+          <div>
+            <div>Mary</div>
+          </div>
         </div>
       </div>
       <div className="menu">
         <div className="options">
           <div id="Portrait" />
-          <div id="Gap"/>
-          <div className='actions'>
-          {Menu.keys.map((key: string) => {
-            const action = Menu[key] as string;
-            return (
-              <div
-                className="menu-actions"
-                key={key}
-                id={selected === action ? 'active' : 'inactive'}
-                onMouseOver={() => {
-                  console.log('action:', action);
-                  setSelected(action);
-                }}
-              >
-                {action}
-              </div>
-            );
-          })}</div>
+          <div id="Gap" />
+          <div className="actions">
+            {Menu.keys.map((key: string) => {
+              const { label: action, icon } = Menu[key] as {
+                label: string;
+                icon: string;
+              };
+              return (
+                <div
+                  className="menu-actions"
+                  key={key}
+                  id={selected === action ? 'active' : 'inactive'}
+                  onMouseOver={() => {
+                    console.log('action:', action);
+                    setSelected(action);
+                  }}
+                >
+                  {icon ? <img src={icon} alt={action} /> : action}
+                </div>
+              );
+            })}
+          </div>
 
           <div id="Menu-Focused">
-            <div id="Selection">{selected}</div>
+            <div>
+              <div>{selected}</div>
+            </div>
           </div>
         </div>
       </div>
