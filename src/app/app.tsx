@@ -1,8 +1,24 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { useState } from 'react';
 import styles from './app.module.scss';
 import './app.scss';
 
+/* Globals */
+const Menu = {
+  keys: ['attack', 'energy', 'djinn', 'summon', 'defend'],
+  attack: 'Attack',
+  energy: 'Energy',
+  djinn: 'Djinn',
+  summon: 'Summon',
+  defend: 'Defend',
+} as {
+  [key: string]: string | string[];
+  keys: string[];
+};
+
 export function App() {
+  const [selected, setSelected] = useState('');
+
   return (
     <div className="App">
       <div className="team">
@@ -21,16 +37,28 @@ export function App() {
       </div>
       <div className="menu">
         <div className="options">
-          <div id="Portrait">[Portrait]</div>
-
-          <div id="Attack">[Attack]</div>
-          <div id="Energy">[Energy]</div>
-          <div id="Djinn">[Djinn]</div>
-          <div id="Summon">[Summon]</div>
-          <div id="Defend">[Defend]</div>
+          <div id="Portrait" />
+          <div id="Gap"/>
+          <div className='actions'>
+          {Menu.keys.map((key: string) => {
+            const action = Menu[key] as string;
+            return (
+              <div
+                className="menu-actions"
+                key={key}
+                id={selected === action ? 'active' : 'inactive'}
+                onMouseOver={() => {
+                  console.log('action:', action);
+                  setSelected(action);
+                }}
+              >
+                {action}
+              </div>
+            );
+          })}</div>
 
           <div id="Menu-Focused">
-            <div>[Menu-Focused]</div>
+            <div id="Selection">{selected}</div>
           </div>
         </div>
       </div>
