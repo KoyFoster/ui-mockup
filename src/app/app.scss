@@ -2,6 +2,7 @@ $menu-frame-bg: #437286;
 
 body {
     margin: 0px;
+    overflow: hidden;
 }
 
 @mixin menu-border {
