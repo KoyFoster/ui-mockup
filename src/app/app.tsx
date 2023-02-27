@@ -1,56 +1,69 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './app.module.scss';
 import './app.scss';
 import menuSheet from '../assets/sprites/Golden-Sun-Menu-Assets.png'
 
 /* Globals */
+interface MenuItem { label: string; map: [number, number, number, number]; sprite: string; };
 const Menu = {
   keys: ['attack', 'energy', 'djinn', 'summon', 'items', 'defend'],
   attack: {
     label: 'Attack',
-    icon: '../assets/sprites/attack.jpg',
+    map: [12, 134, 24, 24],
+    sprite: ''
   },
   energy: {
     label: 'Energy',
-    icon: '',
+    map: [36, 134, 24, 24],
+    sprite: ''
   },
   djinn: {
     label: 'Djinn',
-    icon: '../assets/sprites/djinn.jpg',
+    map: [60, 134, 24, 24],
+    sprite: ''
   },
   summon: {
     label: 'Summon',
-    icon: '../assets/sprites/summon.jpg',
+    map: [84, 134, 24, 24],
+    sprite: ''
   },
   items: {
     label: 'Items',
-    icon: '../assets/sprites/items.jpg',
+    map: [108, 134, 24, 24],
+    sprite: ''
   },
   defend: {
     label: 'defend',
-    icon: '../assets/sprites/defend.jpg',
+    map: [132, 134, 24, 24],
+    sprite: ''
   },
 } as {
-  [key: string]: { label: string; icon: string } | string[];
+  [key: string]: MenuItem | string[];
   keys: string[];
 };
 
-// const map: [12, 134, 24, 24];
-// function getSprite(map: [number,number,number,number]) {
-//   const canvas = document.createElement('canvas');
-//   var ctx = canvas?.getContext("2d");
-//   ctx?.drawImage(menuSheet, 10, 10);
+// const map: [12, 134, 2, 24];
+function getSprite(map: [number, number, number, number]) {
+  // const canvas = document.createElement('canvas');
+  // canvas.width = 128;
+  // canvas.height = 128;
+  const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+  const img = document.createElement('img');
+  img.src = menuSheet;
 
-//   return result;
-// }
+  const ctx = canvas?.getContext("2d");
+  ctx?.drawImage(img, map[0], map[1], map[2], map[3], 0, 0, 128, 128);
+  const cache = canvas.toDataURL("image/png");
 
+  return cache;
+}
 
 export function App() {
   const [selected, setSelected] = useState('');
 
   return (
-    <div className="App">
+    <div className="App">    
       <div className="team">
         <div id="Koy">
           <div>
@@ -79,10 +92,11 @@ export function App() {
           <div id="Gap" />
           <div className="actions">
             {Menu.keys.map((key: string) => {
-              const { label: action, icon } = Menu[key] as {
-                label: string;
-                icon: string;
-              };
+              const item = Menu[key] as MenuItem;
+              const { label: action } = item;
+
+              if(!item.sprite && item.map) item.sprite = getSprite(item.map);
+
               return (
                 <div
                   className="menu-actions"
@@ -93,12 +107,11 @@ export function App() {
                     setSelected(action);
                   }}
                 >
-                  {icon ? <img src={icon} alt={action} /> : action}
+                {item.sprite ? <img src={item.sprite} alt={action} /> : action}
                 </div>
               );
             })}
           </div>
-
           <div id="Menu-Focused">
             <div>
               <div>{selected}</div>
