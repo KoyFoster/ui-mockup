@@ -5,6 +5,10 @@ body {
     overflow: hidden;
 }
 
+canvas {
+    clip: rect(0,0,0,0);
+}
+
 @mixin menu-border {
     >div {
         background-color: $menu-frame-bg;
@@ -138,17 +142,24 @@ body {
             }
 
             @mixin item {
-                background-color: black;
-                border-radius: 8px;
-                width: 128px;
-                height: 128px;
-                transform-origin: top left;
-                transform: scale(97%, 97%);
 
-                border: 4px solid gold;
-                box-shadow: 2px 2px 0px 2px darkred;
+                background-color: transparent;
+                border: none;
+                outline: none;
 
-                &:hover {
+                &:empty {                    
+                    background-color: black;
+                    border-radius: 8px;
+                    width: 128px;
+                    height: 128px;
+                    transform-origin: top left;
+                    transform: scale(97%, 97%);
+
+                    border: 4px solid gold;
+                    box-shadow: 2px 2px 0px 2px darkred;
+                }
+
+                &#active {
                     transform-origin: bottom center;
                     transform: scale(110%);
                     z-index: 1;
@@ -173,7 +184,7 @@ body {
             }
 
             >.actions>.menu-actions:first-child {
-                &:hover {
+                &#active {
                     transform-origin: bottom left;
                     transform: scale(110%);
                     z-index: 1;
@@ -181,13 +192,16 @@ body {
             }
 
             >.actions>.menu-actions:last-child {
-                &:hover {
+                &#active {
                     transform-origin: bottom right;
                 }
             }
 
-            >div#Menu-Focused {
+            >.actions>.menu-actions:is(:focus, :hover) {
+                filter: brightness(160%)
+            }
 
+            >div#Menu-Focused {
                 >div {
                     display: flex;
                     align-items: center;
