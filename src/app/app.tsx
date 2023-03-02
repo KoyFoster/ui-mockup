@@ -93,26 +93,22 @@ export function App() {
         <p style={{ textAlign: 'center' }}>Loading...</p>
       ) : (
         <>
-          <div className="team">
-            <div id="Koy">
-              <div>
-                <div>Koy</div>
-              </div>
+          <div className="menu-frame">
+            <div id="Koy" className="mate">
+              <div className="hp">83</div>
+              <div className="pp">31</div>
             </div>
-            <div id="Garet">
-              <div>
-                <div>Garet</div>
-              </div>
+            <div id="Garet" className="mate">
+              <div className="hp">70</div>
+              <div className="pp">25</div>
             </div>
-            <div id="Ivan">
-              <div>
-                <div>Ivan</div>
-              </div>
+            <div id="Ivan" className="mate">
+              <div className="hp">83</div>
+              <div className="pp">31</div>
             </div>
-            <div id="Mary">
-              <div>
-                <div>Mary</div>
-              </div>
+            <div id="Mary" className="mate">
+              <div className="hp">83</div>
+              <div className="pp">31</div>
             </div>
           </div>
           <div className="menu">
@@ -145,11 +141,7 @@ export function App() {
                   );
                 })}
               </div>
-              <div id="Menu-Focused">
-                <div>
-                  <div>{selected}</div>
-                </div>
-              </div>
+              <div className="menu-frame" id={selected} />
             </div>
           </div>
         </>
