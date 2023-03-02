@@ -4,7 +4,6 @@ import styles from './app.module.scss';
 import './app.scss';
 import menuSheet from '../assets/sprites/Golden-Sun-Menu-Assets.png';
 
-
 /* Globals */
 interface MenuItem {
   label: string;
@@ -39,7 +38,7 @@ const Menu = {
     sprite: '',
   },
   defend: {
-    label: 'defend',
+    label: 'Defend',
     map: [132, 134, 24, 24],
     sprite: '',
   },
@@ -136,9 +135,12 @@ export function App() {
                       onClick={() => {
                         setSelected(action);
                       }}
-                      draggable = 'false'
+                      draggable="false"
+                      data-tool-tip={`${action}`}
                     >
-                      {!item.sprite || <img src={item.sprite} alt={action} draggable = 'false' />}
+                      {!item.sprite || (
+                        <img src={item.sprite} alt={action} draggable="false" />
+                      )}
                     </button>
                   );
                 })}

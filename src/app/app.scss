@@ -5,8 +5,36 @@ body {
     overflow: hidden;
 }
 
+button[data-tool-tip] {
+    position: relative;
+    
+    &::after {
+        content: attr(data-tool-tip);
+        display: block;
+        position: absolute;
+        background-color: black;
+        border: 4px solid gold;
+        padding: 1em 3em;
+        color: #CCCCCC;
+        border-radius: 5px;
+        font-size: .8em;
+        bottom: 80%;
+        white-space: nowrap;
+        filter: opacity(90%);
+
+        transform: scale(0);
+        transition: transform ease-out 100ms,
+        bottom ease-out 100ms;
+    }
+    
+    &:is(:focus, :hover)::after {
+        transform: scale(1);
+        bottom: 100%;
+    }
+}
+
 canvas {
-    clip: rect(0,0,0,0);
+    clip: rect(0, 0, 0, 0);
 }
 
 @mixin menu-border {
@@ -147,7 +175,7 @@ canvas {
                 border: none;
                 outline: none;
 
-                &:empty {                    
+                &:empty {
                     background-color: black;
                     border-radius: 8px;
                     width: 128px;
@@ -177,10 +205,27 @@ canvas {
 
             >.actions {
                 display: flex;
+                counter-reset: counter-actions;
             }
 
             >.actions>.menu-actions {
                 @include item;
+                // Counter Example
+                // counter-increment: counter-actions;
+                // &::before {
+                //     position: absolute;
+                //     content: counter(counter-actions) '. ';
+                //     background-color: #EEEEEE;
+                //     color: black;
+                //     border-radius: 50%;
+                //     width: 2em;
+                //     height: 2em;
+                //     display: flex;
+                //     justify-content: center;
+                //     align-items: center;
+
+                //     border: 4px solid red;
+                // }
             }
 
             >.actions>.menu-actions:first-child {
