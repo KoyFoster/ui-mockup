@@ -70,21 +70,29 @@ async function getSprite(map: [number, number, number, number]) {
   return cache;
 }
 
-const loadSprites = async () => {
-  await Menu.keys.forEach(async (key: string) => {
-    const item = Menu[key] as MenuItem;
-    if (!item.sprite && item.map) item.sprite = await getSprite(item.map);
-  });
-};
-
 export function App() {
   const [selected, setSelected] = useState('');
   const [loaded, setLoaded] = useState(false);
+  const [actionMenu, setActionMenu] = useState(structuredClone(Menu));
+
+  const loadSprites = () => {
+
+  actionMenu.keys.forEach(async (key: string, i) => {
+    const item = actionMenu[key] as MenuItem;
+    if (!item.sprite && item.map) item.sprite = await getSprite(item.map);
+
+    if(i+1 === actionMenu.keys.length)
+    {      
+      setActionMenu(actionMenu);
+      setLoaded(true);
+    }
+  });
+
+  // Update State
+};
 
   useEffect(() => {
-    loadSprites().then(() => {
-      setLoaded(true);
-    });
+    loadSprites();
   }, []);
 
   return (
@@ -115,8 +123,8 @@ export function App() {
               <img id="Portrait" src='../assets/sprites/portrait.jpg' alt='Portrait' />
               <div id="Gap" />
               <div className="actions">
-                {Menu.keys.map((key: string) => {
-                  const item = Menu[key] as MenuItem;
+                {actionMenu.keys.map((key: string) => {
+                  const item = actionMenu[key] as MenuItem;
                   const { label: action } = item;
 
                   // if(!item.sprite && item.map) item.sprite = await getSprite(item.map);
