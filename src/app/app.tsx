@@ -57,15 +57,15 @@ function loadImage(url: string) {
 
 // const map: [12, 134, 2, 24];
 async function getSprite(map: [number, number, number, number]) {
-  // const canvas = document.createElement('canvas');
-  // canvas.width = 128;
-  // canvas.height = 128;
   const canvas = document.getElementById('canvas') as HTMLCanvasElement;
   const img = (await loadImage(menuSheet)) as CanvasImageSource;
-
+  
   const ctx = canvas?.getContext('2d');
-  ctx?.drawImage(img, map[0], map[1], map[2], map[3], 0, 0, 128, 128);
-  const cache = canvas.toDataURL('image/png');
+  canvas.width = map[2];
+  canvas.height = map[3];
+
+  ctx?.drawImage(img, map[0], map[1], map[2], map[3], 0, 0, map[2], map[3]);
+  const cache = canvas.toDataURL('image/jpg');
 
   return cache;
 }
@@ -93,7 +93,7 @@ export function App() {
         <p style={{ textAlign: 'center' }}>Loading...</p>
       ) : (
         <>
-          <div className="menu-frame">
+          <div className="menu-frame team">
             <div id="Koy" className="mate">
               <div className="hp">83</div>
               <div className="pp">31</div>
@@ -112,8 +112,7 @@ export function App() {
             </div>
           </div>
           <div className="menu">
-            <div className="options">
-              <div id="Portrait" />
+              <img id="Portrait" src='../assets/sprites/portrait.jpg' alt='Portrait' />
               <div id="Gap" />
               <div className="actions">
                 {Menu.keys.map((key: string) => {
@@ -142,7 +141,6 @@ export function App() {
                 })}
               </div>
               <div className="menu-frame" id={selected} />
-            </div>
           </div>
         </>
       )}
