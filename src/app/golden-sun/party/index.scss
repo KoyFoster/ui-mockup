@@ -1,0 +1,25 @@
+.team {
+    position: left;
+    right: 0;
+}
+
+.mate {
+    position: relative;
+    z-index: 1;
+    padding-left: 16px;
+    width: 170px;
+    border-right: 4px solid #00000055;
+    border-left: 4px solid inherit;
+    background-color: inherit;
+
+    &::before {
+        content: attr(id);
+        position: absolute;
+        transform: translate(0, -20px);
+        background-color: inherit;
+    }
+
+    >.hp {
+        padding-top: 8px;
+    }
+}

@@ -1,0 +1,11 @@
+.action-display-popup {
+    z-index: 2;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    background: #000000AA;
+    
+    transition: transform ease-out 1000ms,
+    opacity ease-in 1000ms;
+}
