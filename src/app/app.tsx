@@ -11,75 +11,80 @@ interface MenuItem {
   label: string;
   map: [number, number, number, number];
   sprite: string;
+  menu: MenuItem;
+  action: () => void;
 }
 
 //
-const Menu = {
-  keys: ['fight', 'run', 'status'],
-  loaded: false,
-  fight: {
-    id: 'fight',
-    label: 'Fight',
-    map: [12, 106, 24, 24],
-    sprite: '',
+const BattleMenu = {
+  id: '.',
+  menu: {
+    keys: ['fight', 'run', 'status'],
+    loaded: false,
+    fight: {
+      id: 'fight',
+      label: 'Fight',
+      map: [12, 106, 24, 24],
+      sprite: '',
+      parent: '.',
 
-    menu: {
-      keys: ['attack', 'energy', 'djinn', 'summon', 'items', 'defend'],
-      loaded: false,
-      attack: {
-        id: 'attack',
-        label: 'Attack',
-        map: [12, 134, 24, 24],
-        sprite: '',
-      },
-      energy: {
-        id: 'energy',
-        label: 'Energy',
-        map: [36, 134, 24, 24],
-        sprite: '',
-      },
-      djinn: {
-        id: 'djinn',
-        label: 'Djinn',
-        map: [60, 134, 24, 24],
-        sprite: '',
-      },
-      summon: {
-        id: 'summon',
-        label: 'Summon',
-        map: [84, 134, 24, 24],
-        sprite: '',
-      },
-      items: {
-        id: 'items',
-        label: 'Items',
-        map: [108, 134, 24, 24],
-        sprite: '',
-      },
-      defend: {
-        id: 'defend',
-        label: 'Defend',
-        map: [132, 134, 24, 24],
-        sprite: '',
+      menu: {
+        keys: ['attack', 'energy', 'djinn', 'summon', 'items', 'defend'],
+        loaded: false,
+        attack: {
+          id: 'attack',
+          label: 'Attack',
+          map: [12, 134, 24, 24],
+          sprite: '',
+        },
+        energy: {
+          id: 'energy',
+          label: 'Energy',
+          map: [36, 134, 24, 24],
+          sprite: '',
+        },
+        djinn: {
+          id: 'djinn',
+          label: 'Djinn',
+          map: [60, 134, 24, 24],
+          sprite: '',
+        },
+        summon: {
+          id: 'summon',
+          label: 'Summon',
+          map: [84, 134, 24, 24],
+          sprite: '',
+        },
+        items: {
+          id: 'items',
+          label: 'Items',
+          map: [108, 134, 24, 24],
+          sprite: '',
+        },
+        defend: {
+          id: 'defend',
+          label: 'Defend',
+          map: [132, 134, 24, 24],
+          sprite: '',
+        },
       },
     },
-  },
-
-  run: {
-    id: 'run',
-    label: 'Run',
-    map: [36, 106, 24, 24],
-    sprite: '',
-    action: () => {
-      console.log('コイたち逃げ出した');
+    run: {
+      id: 'run',
+      label: 'Run',
+      map: [36, 106, 24, 24],
+      sprite: '',
+      action: () => {
+        console.log('コイたち逃げ出した');
+      },
     },
-  },
 
-  status: {
-    id: 'status',
-    label: 'Status',
-    map: [60, 106, 24, 24],
-    sprite: '',
+    status: {
+      id: 'status',
+      label: 'Status',
+      map: [60, 106, 24, 24],
+      sprite: '',
+    },
   },
 } as {
   [key: string]: MenuItem | string[] | any;
@@ -114,7 +119,7 @@ async function getSprite(map: [number, number, number, number]) {
 const actionPopupMessageTimer = 3000;
 
 export function App() {
-  const [actionMenu, setActionMenu] = useState(cloneDeep(Menu));
+  const [actionMenu, setActionMenu] = useState(cloneDeep(BattleMenu));
   const [menuPosition, setMenuPosition] = useState({
     context: actionMenu,
     path: '',
@@ -135,22 +140,22 @@ export function App() {
   }, []);
 
   function loadSprites() {
-    const menu = menuPosition.context;
-    if (!menu.isLoaded) {
-      setLoaded(false);
-      console.log('loading sprites');
-      menu?.keys.forEach(async (key: string, i: number) => {
-        const item = menu[key] as MenuItem;
-        if (!item.sprite && item.map) item.sprite = await getSprite(item.map);
+    const { menu } = menuPosition.context;
+    console.log({ menu });
+    // setLoaded(false);
+    menu?.keys.forEach(async (key: string, i: number) => {
+      const item = menu[key] as MenuItem;
+      if (!item.sprite && item.map) {
+        item.sprite = await getSprite(item.map);
 
         if (i + 1 === menu.keys.length) {
           menu[key].isLoaded = true;
           setActionMenu(actionMenu);
-          setLoaded(true);
           console.log('sprites loaded');
         }
-      });
-    }
+      }
+      setLoaded(true);
+    });
     // Update State
   }
 
@@ -159,14 +164,38 @@ export function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuPosition?.context]);
 
+  useEffect(() => {
+    const onEscape = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      // go back a menu
+      setMenuPosition((menuPosition) => {
+        const { parent } = menuPosition.context;
+        if (parent) {
+          // TODO (2023-03-05): To tired to do circular dependencies right now. Maybe later
+          // menuPosition.context = menuPosition.context?.menu?.parent;
+          const path = parent.split(',');
+          if (path.length === 1) {
+            menuPosition.context = actionMenu;
+          }
+        }
+        // new path
+        console.log({ context: menuPosition.context.id });
+        return { ...menuPosition };
+      });
+    };
+
+    window.addEventListener('keyup', onEscape);
+
+    return () => {
+      window.removeEventListener('keyup', onEscape);
+    };
+  }, [actionMenu]);
+
   function getMenu() {
-    return menuPosition.context?.keys.map((key: string) => {
-      const item = menuPosition.context[key] as MenuItem;
-      const { id: action } = item;
-
-      // if(!item.sprite && item.map) item.sprite = await getSprite(item.map);
-
-console.warn('rerender')
+    return menuPosition.context?.menu?.keys.map((key: string) => {
+      const { menu } = menuPosition.context;
+      const item = menu[key] as MenuItem;
+      const { id: itemId } = item;
 
       return (
         <button
@@ -174,30 +203,30 @@ console.warn('rerender')
           className="menu-actions"
           key={key}
           onClick={() => {
-            // Enter menu context
-            if (menuPosition.context[action].menu) {
+            // Check for menu
+            if (menu[itemId].menu) {
               setMenuPosition({
-                context: menuPosition.context[action].menu,
+                context: menu[itemId],
                 path: '',
               });
             }
             // Run Behavior
             else {
-              if (menuPosition.context[action].action)
-                menuPosition.context[action].action();
+              if (menuPosition.context.menu[itemId].action)
+                menuPosition.context.menu[itemId].action();
               else {
-                if (messages.findIndex(({ id }) => id === action) < 0) {
+                if (messages.findIndex(({ id }) => id === itemId) < 0) {
                   // TODO (2023-03-05): Throw all this into a reducer
                   // decay
                   const decayTime = setTimeout(() => {
                     setMessages((msgs) =>
-                      msgs.filter(({ id }) => id !== action)
+                      msgs.filter(({ id }) => id !== itemId)
                     );
                   }, actionPopupMessageTimer);
                   // show
                   const showTime = setTimeout(() => {
                     setMessages((msgs) => {
-                      const msg = msgs.find(({ id }) => id === action);
+                      const msg = msgs.find(({ id }) => id === itemId);
                       if (msg) msg.show = true;
                       return [...msgs];
                     });
@@ -205,7 +234,7 @@ console.warn('rerender')
                   // hide
                   const hideTime = setTimeout(() => {
                     setMessages((msgs) => {
-                      const msg = msgs.find(({ id }) => id === action);
+                      const msg = msgs.find(({ id }) => id === itemId);
                       if (msg) msg.show = false;
                       return [...msgs];
                     });
@@ -217,12 +246,12 @@ console.warn('rerender')
                     showTime,
                     hideTime,
                   ]);
-                  
+
                   setMessages((msgs) => [
                     ...msgs,
                     {
-                      id: action,
-                      message: `You tried to ${action}, but nothing happened.`,
+                      id: itemId,
+                      message: `You tried to ${itemId}, but nothing happened.`,
                       x: `${Math.floor(Math.random() * 51)}%`,
                       y: `${10 + Math.floor(Math.random() * 41)}%`,
                       show: false,
@@ -233,10 +262,10 @@ console.warn('rerender')
             }
           }}
           draggable="false"
-          data-tool-tip={`${action}`}
+          data-tool-tip={`${itemId}`}
         >
           {!item.sprite || (
-            <img src={item.sprite} alt={action} draggable="false" />
+            <img src={item.sprite} alt={itemId} draggable="false" />
           )}
         </button>
       );
@@ -245,12 +274,11 @@ console.warn('rerender')
 
   function getMessages() {
     return messages.map(({ id, message, x, y, show }) => {
-      // id={showMessage ? 'show' : 'hide'}
       return (
         <div
           key={id}
           id={id}
-          className={"action-display-popup" + (show ? ' fade-in' : ' fade-out')}
+          className={'action-display-popup' + (show ? ' fade-in' : ' fade-out')}
           style={{ left: x, top: y }}
         >
           {message}
