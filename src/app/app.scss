@@ -12,6 +12,29 @@ canvas {
     clip: rect(0, 0, 0, 0);
 }
 
+
+.fade-in {
+    transform: translateY(-64px);
+    opacity: 100%;
+}
+
+.fade-out {
+    transform: translateY(0px);
+    opacity: 0%;
+}
+
+.action-display-popup {
+    z-index: 1;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    background: #000000AA;
+    
+    transition: transform ease-out 1000ms,
+    opacity ease-in 1000ms;
+}
+
 canvas,
 img {
     image-rendering: optimizeSpeed;
@@ -155,6 +178,7 @@ button[data-tool-tip] {
 
             border: none;
             box-shadow: transparent;
+
             &:is(:empty) {
                 border: 4px solid gold;
                 box-shadow: 2px 2px 0px 2px darkred;

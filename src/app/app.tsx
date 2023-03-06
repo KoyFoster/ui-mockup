@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { useEffect, useState } from 'react';
+import { createElement, useEffect, useState } from 'react';
 import styles from './app.module.scss';
 import './app.scss';
 import menuSheet from '../assets/sprites/Golden-Sun-Menu-Assets.png';
@@ -109,6 +109,10 @@ async function getSprite(map: [number, number, number, number]) {
   return cache;
 }
 
+// Basic Settings
+/** How long the popup for action remains on the screen in milliseconds. */
+const actionPopupMessageTimer = 3000;
+
 export function App() {
   const [actionMenu, setActionMenu] = useState(cloneDeep(Menu));
   const [menuPosition, setMenuPosition] = useState({
@@ -116,8 +120,21 @@ export function App() {
     path: '',
   });
   const [loaded, setLoaded] = useState(false);
+  const [messages, setMessages] = useState(
+    [] as { id: string; message: string; x: string; y: string; show: boolean }[]
+  );
+  const [timers, setTimers] = useState([] as NodeJS.Timeout[]);
 
-  const loadSprites = () => {
+  useEffect(() => {
+    return () => {
+      timers.forEach((timeout) => {
+        clearTimeout(timeout);
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function loadSprites() {
     const menu = menuPosition.context;
     if (!menu.isLoaded) {
       setLoaded(false);
@@ -135,10 +152,11 @@ export function App() {
       });
     }
     // Update State
-  };
+  }
 
   useEffect(() => {
     loadSprites();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuPosition?.context]);
 
   function getMenu() {
@@ -148,12 +166,13 @@ export function App() {
 
       // if(!item.sprite && item.map) item.sprite = await getSprite(item.map);
 
+console.warn('rerender')
+
       return (
         <button
           type="button"
           className="menu-actions"
           key={key}
-          // id={menuPosition[0] === action ? 'active' : 'inactive'}
           onClick={() => {
             // Enter menu context
             if (menuPosition.context[action].menu) {
@@ -166,7 +185,51 @@ export function App() {
             else {
               if (menuPosition.context[action].action)
                 menuPosition.context[action].action();
-              else console.log(`You tried to ${action}, but nothing happened.`);
+              else {
+                if (messages.findIndex(({ id }) => id === action) < 0) {
+                  // TODO (2023-03-05): Throw all this into a reducer
+                  // decay
+                  const decayTime = setTimeout(() => {
+                    setMessages((msgs) =>
+                      msgs.filter(({ id }) => id !== action)
+                    );
+                  }, actionPopupMessageTimer);
+                  // show
+                  const showTime = setTimeout(() => {
+                    setMessages((msgs) => {
+                      const msg = msgs.find(({ id }) => id === action);
+                      if (msg) msg.show = true;
+                      return [...msgs];
+                    });
+                  }, 100);
+                  // hide
+                  const hideTime = setTimeout(() => {
+                    setMessages((msgs) => {
+                      const msg = msgs.find(({ id }) => id === action);
+                      if (msg) msg.show = false;
+                      return [...msgs];
+                    });
+                  }, 2000);
+                  // Pocket timers for future cleanup
+                  setTimers((times) => [
+                    ...times,
+                    decayTime,
+                    showTime,
+                    hideTime,
+                  ]);
+                  
+                  setMessages((msgs) => [
+                    ...msgs,
+                    {
+                      id: action,
+                      message: `You tried to ${action}, but nothing happened.`,
+                      x: `${Math.floor(Math.random() * 51)}%`,
+                      y: `${10 + Math.floor(Math.random() * 41)}%`,
+                      show: false,
+                    },
+                  ]);
+                }
+              }
             }
           }}
           draggable="false"
@@ -180,12 +243,29 @@ export function App() {
     });
   }
 
+  function getMessages() {
+    return messages.map(({ id, message, x, y, show }) => {
+      // id={showMessage ? 'show' : 'hide'}
+      return (
+        <div
+          key={id}
+          id={id}
+          className={"action-display-popup" + (show ? ' fade-in' : ' fade-out')}
+          style={{ left: x, top: y }}
+        >
+          {message}
+        </div>
+      );
+    });
+  }
+
   return (
     <div className="App">
       {!loaded ? (
         <p style={{ textAlign: 'center' }}>Loading...</p>
       ) : (
         <>
+          {getMessages()}
           <div className="menu-frame team">
             <div id="Koy" className="mate">
               <div className="hp">83</div>
