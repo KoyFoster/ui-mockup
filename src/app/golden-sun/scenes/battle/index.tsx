@@ -1,15 +1,16 @@
 import { cloneDeep } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import TransientPopup from '../../../popups/transient-popup';
 import ActionButton from '../../action-button';
 import menuSheet from '../../assets/sprites/Golden-Sun-Menu-Assets.png';
 import Menu from '../../data/battle-menu.json';
 import Party from '../../party';
 import './index.scss';
+import MenuMove from "../../assets/sounds/MenuMove.wav";
 const BattleMenu = Menu as BattleMenu;
 
-// TODO (2023-03-06 17:37:29): Refactor sprite related code
-// TODO (2023-03-06 17:40:33): Refactor Menu Code
+// TODO (2023-03-06 17:37:29): Refactor sprite code
+// TODO (2023-03-06 17:40:33): Refactor menu code
 
 /* Globals */
 interface MenuItem {
@@ -47,6 +48,8 @@ async function getSprite(map: [number, number, number, number]) {
 // Basic Settings
 
 const Battle = () => {
+  const menuMoveRef = useRef(new Audio(MenuMove) as null | HTMLAudioElement);
+  const {current: menuMove} = menuMoveRef;
   const { renderMessages, addTransientMessage } = TransientPopup();
   const [actionMenu, setActionMenu] = useState(cloneDeep(BattleMenu));
   const [toolTip, setToolTip] = useState('');
@@ -88,7 +91,7 @@ const Battle = () => {
       setMenuPosition((menuPosition) => {
         const { parent } = menuPosition.context;
         if (parent) {
-          // TODO (2023-03-05): To tired to do circular dependencies right now. Maybe later
+          // TODO (2023-03-05): Too tired to do circular dependencies right now. Maybe later
           // menuPosition.context = menuPosition.context?.menu?.parent;
           const path = parent.split(',');
           if (path.length === 1) {
@@ -148,14 +151,16 @@ const Battle = () => {
               menuPosition.context.menu[itemId].action
             );
           }}
-          onMouseOver={() => {            
-            setToolTip( menuPosition.context.menu[itemId].label);
+          onMouseOver={() => {
+            setToolTip(menuPosition.context.menu[itemId].label);
+            menuMove?.play();
           }}
-          onMouseLeave={() => {            
+          onMouseLeave={() => {
             setToolTip('');
           }}
-          onFocus={() => {            
-            setToolTip( menuPosition.context.menu[itemId].label);
+          onFocus={() => {
+            setToolTip(menuPosition.context.menu[itemId].label);
+            menuMove?.play();
           }}
         />
       );
@@ -165,7 +170,7 @@ const Battle = () => {
   return !loaded ? (
     <p style={{ textAlign: 'center' }}>Loading...</p>
   ) : (
-    <div className='gs-battle'>
+    <div className="gs-battle">
       {renderMessages()}
       <Party />
       <div className="menu">
