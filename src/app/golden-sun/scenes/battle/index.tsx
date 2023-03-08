@@ -49,6 +49,7 @@ async function getSprite(map: [number, number, number, number]) {
 const Battle = () => {
   const { renderMessages, addTransientMessage } = TransientPopup();
   const [actionMenu, setActionMenu] = useState(cloneDeep(BattleMenu));
+  const [toolTip, setToolTip] = useState('');
   const [menuPosition, setMenuPosition] = useState({
     context: actionMenu,
     path: '',
@@ -147,6 +148,15 @@ const Battle = () => {
               menuPosition.context.menu[itemId].action
             );
           }}
+          onMouseOver={() => {            
+            setToolTip( menuPosition.context.menu[itemId].label);
+          }}
+          onMouseLeave={() => {            
+            setToolTip('');
+          }}
+          onFocus={() => {            
+            setToolTip( menuPosition.context.menu[itemId].label);
+          }}
         />
       );
     });
@@ -166,7 +176,7 @@ const Battle = () => {
         />
         <div id="Gap" />
         <div className="actions">{getMenu()}</div>
-        <div className="menu-frame" id={menuPosition.context.id} />
+        <div className="menu-frame" id={toolTip} />
       </div>
     </>
   );

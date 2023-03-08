@@ -15,7 +15,7 @@ const ActionButton = ({
   return (
     <button
       type="button"
-      className="menu-actions"
+      className="action-button"
       onClick={onClick}
       draggable="false"
       data-tool-tip={`${id}`}
