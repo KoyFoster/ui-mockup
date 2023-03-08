@@ -3,7 +3,11 @@
     font-style: normal;
     font-weight: normal;
     src: local('DeterminationMonoWeb'),
-        url(../assets/fonts/DeterminationMonoWeb.ttf) format('truetype');
+        url(../../assets/fonts/DeterminationMonoWeb.ttf) format('truetype');
+}
+
+.gs-battle {
+    font: 32px DeterminationMonoWeb;
 }
 
 $menu-frame-bg: #437286;

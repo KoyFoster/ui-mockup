@@ -165,7 +165,7 @@ const Battle = () => {
   return !loaded ? (
     <p style={{ textAlign: 'center' }}>Loading...</p>
   ) : (
-    <>
+    <div className='gs-battle'>
       {renderMessages()}
       <Party />
       <div className="menu">
@@ -178,7 +178,7 @@ const Battle = () => {
         <div className="actions">{getMenu()}</div>
         <div className="menu-frame" id={toolTip} />
       </div>
-    </>
+    </div>
   );
 };
 
