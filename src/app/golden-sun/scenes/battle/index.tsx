@@ -2,54 +2,19 @@ import { cloneDeep } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import TransientPopup from '../../../popups/transient-popup';
 import ActionButton from '../../action-button';
+import MenuMove from '../../assets/sounds/MenuMove.wav';
 import menuSheet from '../../assets/sprites/Golden-Sun-Menu-Assets.png';
 import Menu from '../../data/battle-menu.json';
 import Party from '../../party';
+import getSprites from '../../util/sprite-sheet-parser';
 import './index.scss';
-import MenuMove from "../../assets/sounds/MenuMove.wav";
-const BattleMenu = Menu as BattleMenu;
+const BattleMenu = Menu as MenuNode;
 
-// TODO (2023-03-06 17:37:29): Refactor sprite code
 // TODO (2023-03-06 17:40:33): Refactor menu code
-
-/* Globals */
-interface MenuItem {
-  id: string;
-  label: string;
-  map: [number, number, number, number];
-  sprite: string;
-  menu: MenuItem;
-  action: () => void;
-}
-
-function loadImage(url: string) {
-  return new Promise((r) => {
-    const i = new Image();
-    i.onload = () => r(i);
-    i.src = url;
-  });
-}
-
-// const map: [12, 134, 2, 24];
-async function getSprite(map: [number, number, number, number]) {
-  const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-  const img = (await loadImage(menuSheet)) as CanvasImageSource;
-
-  const ctx = canvas?.getContext('2d');
-  canvas.width = map[2];
-  canvas.height = map[3];
-
-  ctx?.drawImage(img, map[0], map[1], map[2], map[3], 0, 0, map[2], map[3]);
-  const cache = canvas.toDataURL('image/jpg');
-
-  return cache;
-}
-
-// Basic Settings
 
 const Battle = () => {
   const menuMoveRef = useRef(new Audio(MenuMove) as null | HTMLAudioElement);
-  const {current: menuMove} = menuMoveRef;
+  const { current: menuMove } = menuMoveRef;
   const { renderMessages, addTransientMessage } = TransientPopup();
   const [actionMenu, setActionMenu] = useState(cloneDeep(BattleMenu));
   const [toolTip, setToolTip] = useState('');
@@ -59,25 +24,20 @@ const Battle = () => {
   });
   const [loaded, setLoaded] = useState(false);
 
-  function loadSprites() {
-    const { menu } = menuPosition.context;
-    console.log({ menu });
-    // setLoaded(false);
-    menu?.keys.forEach(async (key: string, i: number) => {
-      const item = menu[key] as MenuItem;
-      if (!item.sprite && item.map) {
-        item.sprite = await getSprite(item.map);
+  const loadSprites = async () => {
+    const menu = menuPosition.context;
+    const { options } = menu;
 
-        if (i + 1 === menu.keys.length) {
-          menu[key].isLoaded = true;
-          setActionMenu(actionMenu);
-          console.log('sprites loaded');
-        }
-      }
+    if (!menu.loaded && options) {
+      setLoaded(false);
+      const maps = options.map((option) => menu[option].map);
+      const sprites = await getSprites(menuSheet, maps);
+      options.forEach((option, i) => (menu[option].sprite = sprites[i]));
+      setActionMenu(actionMenu);
+      menu.loaded = true;
       setLoaded(true);
-    });
-    // Update State
-  }
+    }
+  };
 
   useEffect(() => {
     loadSprites();
@@ -92,20 +52,16 @@ const Battle = () => {
         const { parent } = menuPosition.context;
         if (parent) {
           // TODO (2023-03-05): Too tired to do circular dependencies right now. Maybe later
-          // menuPosition.context = menuPosition.context?.menu?.parent;
+          // menuPosition.context = menuPosition.context?.parent;
           const path = parent.split(',');
           if (path.length === 1) {
             menuPosition.context = actionMenu;
           }
         }
-        // new path
-        console.log({ context: menuPosition.context.id });
         return { ...menuPosition };
       });
     };
-
     window.addEventListener('keyup', onEscape);
-
     return () => {
       window.removeEventListener('keyup', onEscape);
     };
@@ -113,11 +69,11 @@ const Battle = () => {
 
   const handleActionClick = (
     actionId: string,
-    menu: MenuItem,
+    menu?: MenuNode,
     action?: () => void
   ) => {
     // Check for menu
-    if (menu.menu) {
+    if (menu?.options) {
       setMenuPosition({
         context: menu,
         path: '',
@@ -133,33 +89,37 @@ const Battle = () => {
   };
 
   function getMenu() {
-    return menuPosition.context?.menu?.keys.map((key: string) => {
-      const { menu } = menuPosition.context;
-      const item = menu[key] as MenuItem;
+    return menuPosition.context?.options?.map((option) => {
+      const menu = menuPosition.context;
+      if (!menu) return null;
+      const item = menu[option] as MenuNode;
       const { id: itemId } = item;
 
       return (
         <ActionButton
-          key={key}
+          key={option}
           id={itemId}
           src={item.sprite}
           alt={itemId}
           onClick={() => {
-            handleActionClick(
-              itemId,
-              menu[itemId],
-              menuPosition.context.menu[itemId].action
-            );
+            if (menuPosition.context)
+              handleActionClick(
+                itemId,
+                menu[itemId],
+                menuPosition.context[itemId].action
+              );
           }}
           onMouseOver={() => {
-            setToolTip(menuPosition.context.menu[itemId].label);
+            if (menuPosition.context)
+              setToolTip(menuPosition.context[itemId].label);
             menuMove?.play();
           }}
           onMouseLeave={() => {
             setToolTip('');
           }}
           onFocus={() => {
-            setToolTip(menuPosition.context.menu[itemId].label);
+            if (menuPosition.context)
+              setToolTip(menuPosition.context[itemId].label);
             menuMove?.play();
           }}
         />

@@ -1,69 +1,65 @@
 {
   "id": ".",
-  "menu": {
-    "keys": ["fight", "run", "status"],
+  "options": ["fight", "run", "status"],
+  "loaded": false,
+  "fight": {
+    "id": "fight",
+    "label": "Fight",
+    "map": [12, 106, 24, 24],
+    "sprite": "",
+    "parent": ".",
+
     "loaded": false,
-    "fight": {
-      "id": "fight",
-      "label": "Fight",
-      "map": [12, 106, 24, 24],
-      "sprite": "",
-      "parent": ".",
-
-      "menu": {
-        "keys": ["attack", "energy", "djinn", "summon", "items", "defend"],
-        "loaded": false,
-        "attack": {
-          "id": "attack",
-          "label": "Attack",
-          "map": [12, 134, 24, 24],
-          "sprite": ""
-        },
-        "energy": {
-          "id": "energy",
-          "label": "Energy",
-          "map": [36, 134, 24, 24],
-          "sprite": ""
-        },
-        "djinn": {
-          "id": "djinn",
-          "label": "Djinn",
-          "map": [60, 134, 24, 24],
-          "sprite": ""
-        },
-        "summon": {
-          "id": "summon",
-          "label": "Summon",
-          "map": [84, 134, 24, 24],
-          "sprite": ""
-        },
-        "items": {
-          "id": "items",
-          "label": "Items",
-          "map": [108, 134, 24, 24],
-          "sprite": ""
-        },
-        "defend": {
-          "id": "defend",
-          "label": "Defend",
-          "map": [132, 134, 24, 24],
-          "sprite": ""
-        }
-      }
+    "options": ["attack", "energy", "djinn", "summon", "items", "defend"],
+    "attack": {
+      "id": "attack",
+      "label": "Attack",
+      "map": [12, 134, 24, 24],
+      "sprite": ""
     },
-    "run": {
-      "id": "run",
-      "label": "Run",
-      "map": [36, 106, 24, 24],
-      "sprite": "",      
-      "action": "() => { console.log('コイたち逃げ出した'); }"
+    "energy": {
+      "id": "energy",
+      "label": "Energy",
+      "map": [36, 134, 24, 24],
+      "sprite": ""
     },
-
-    "status": {
-      "id": "status",
-      "label": "Status",
-      "map": [60, 106, 24, 24],
+    "djinn": {
+      "id": "djinn",
+      "label": "Djinn",
+      "map": [60, 134, 24, 24],
+      "sprite": ""
+    },
+    "summon": {
+      "id": "summon",
+      "label": "Summon",
+      "map": [84, 134, 24, 24],
+      "sprite": ""
+    },
+    "items": {
+      "id": "items",
+      "label": "Items",
+      "map": [108, 134, 24, 24],
+      "sprite": ""
+    },
+    "defend": {
+      "id": "defend",
+      "label": "Defend",
+      "map": [132, 134, 24, 24],
       "sprite": ""
     }
+  },
+  "run": {
+    "id": "run",
+    "label": "Run",
+    "map": [36, 106, 24, 24],
+    "sprite": "",
+    "action": "() => { console.log('コイたち逃げ出した'); }"
+  },
+
+  "status": {
+    "id": "status",
+    "label": "Status",
+    "map": [60, 106, 24, 24],
+    "sprite": ""
   }
 }
