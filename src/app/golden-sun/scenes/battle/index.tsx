@@ -63,7 +63,6 @@ const Battle = () => {
         path.slice(1).forEach((part) => {
           position = position[part];
         });
-        console.log({ path, parent, actionMenu, position });
         menuPosition.context = position;
 
         sounds.menuNagtive.Play();
@@ -75,7 +74,6 @@ const Battle = () => {
 
     window.addEventListener('keyup', onEscape);
     return () => {
-      console.log('clear-listener');
       window.removeEventListener('keyup', onEscape);
     };
   }, [menuPosition.context, actionMenu, sounds.menuNagtive, menuPosition]);
