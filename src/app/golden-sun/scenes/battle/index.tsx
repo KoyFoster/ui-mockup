@@ -2,8 +2,7 @@ import { cloneDeep } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import TransientPopup from '../../../popups/transient-popup';
 import ActionButton from '../../action-button';
-import MenuMove from '../../assets/sounds/fx/MenuMove.wav';
-import BattleTheme from '../../assets/sounds/bg/battle-theme.mp3';
+import SoundController from '../../assets/sounds';
 import menuSheet from '../../assets/sprites/Golden-Sun-Menu-Assets.png';
 import Menu from '../../data/battle-menu.json';
 import Party from '../../party';
@@ -14,12 +13,8 @@ const BattleMenu = Menu as MenuNode;
 // TODO (2023-03-06 17:40:33): Refactor menu code
 
 const Battle = () => {
-  const battleThemeRef = useRef(
-    new Audio(BattleTheme) as null | HTMLAudioElement
-  );
-  const { current: battleTheme } = battleThemeRef;
-  const menuMoveRef = useRef(new Audio(MenuMove) as null | HTMLAudioElement);
-  const { current: menuMove } = menuMoveRef;
+  const sounds = SoundController();
+
   const { renderMessages, addTransientMessage } = TransientPopup();
   const [actionMenu, setActionMenu] = useState(cloneDeep(BattleMenu));
   const [toolTip, setToolTip] = useState('');
@@ -45,10 +40,8 @@ const Battle = () => {
   };
 
   useEffect(() => {
-    if (battleTheme) {
-      battleTheme.volume = 0.10;
-      battleTheme.play();
-    }
+    sounds.battleTheme.volume = 0.1;
+    sounds.battleTheme.Play();
   }, []);
 
   useEffect(() => {
@@ -59,25 +52,33 @@ const Battle = () => {
   useEffect(() => {
     const onEscape = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
+
+      const { parent } = menuPosition.context;
+      if (parent) {
+        // TODO (2023-03-05): Too tired to do circular dependencies right now. Maybe later
+        // menuPosition.context = menuPosition.context?.parent;
+        const path = parent.split('/');
+
+        let position = actionMenu;
+        path.slice(1).forEach((part) => {
+          position = position[part];
+        });
+        console.log({ path, parent, actionMenu, position });
+        menuPosition.context = position;
+
+        sounds.menuNagtive.Play();
+      }
+
       // go back a menu
-      setMenuPosition((menuPosition) => {
-        const { parent } = menuPosition.context;
-        if (parent) {
-          // TODO (2023-03-05): Too tired to do circular dependencies right now. Maybe later
-          // menuPosition.context = menuPosition.context?.parent;
-          const path = parent.split(',');
-          if (path.length === 1) {
-            menuPosition.context = actionMenu;
-          }
-        }
-        return { ...menuPosition };
-      });
+      setMenuPosition({ ...menuPosition });
     };
+
     window.addEventListener('keyup', onEscape);
     return () => {
+      console.log('clear-listener');
       window.removeEventListener('keyup', onEscape);
     };
-  }, [actionMenu]);
+  }, [menuPosition.context, actionMenu, sounds.menuNagtive, menuPosition]);
 
   const handleActionClick = (
     actionId: string,
@@ -114,17 +115,19 @@ const Battle = () => {
           src={item.sprite}
           alt={itemId}
           onClick={() => {
-            if (menuPosition.context)
+            if (menuPosition.context) {
               handleActionClick(
                 itemId,
                 menu[itemId],
                 menuPosition.context[itemId].action
               );
+              sounds.menuPositive.Play();
+            }
           }}
           onMouseOver={() => {
             if (menuPosition.context)
               setToolTip(menuPosition.context[itemId].label);
-            menuMove?.play();
+            sounds.menuMove.Play();
           }}
           onMouseLeave={() => {
             setToolTip('');
@@ -132,7 +135,7 @@ const Battle = () => {
           onFocus={() => {
             if (menuPosition.context)
               setToolTip(menuPosition.context[itemId].label);
-            menuMove?.play();
+            sounds.menuMove.Play();
           }}
         />
       );
