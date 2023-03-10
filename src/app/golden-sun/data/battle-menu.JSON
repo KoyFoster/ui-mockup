@@ -11,17 +11,48 @@
 
     "loaded": false,
     "options": ["attack", "energy", "djinn", "summon", "items", "defend"],
+    "optionType": "decision-menu",
     "attack": {
       "id": "attack",
       "label": "Attack",
       "map": [12, 134, 24, 24],
-      "sprite": ""
+      "sprite": "",
+      "action": "Attack"
     },
     "energy": {
       "id": "energy",
       "label": "Energy",
       "map": [36, 134, 24, 24],
-      "sprite": ""
+      "sprite": "",
+      "parent": "./fight",
+
+      "loaded": true,
+      "options": ["ragnarok", "quake", "earthquake", "spire", "gaia", "cure"],
+      "optionType": "skill-menu",
+      "ragnarok": {
+        "id": "ragnarok",
+        "label": "Ragnarok"
+      },
+      "quake": {
+        "id": "quake",
+        "label": "Quake"
+      },
+      "earthquake": {
+        "id": "earthquake",
+        "label": "Earthquake"
+      },
+      "spire": {
+        "id": "spire",
+        "label": "Spire"
+      },
+      "gaia": {
+        "id": "gaia",
+        "label": "Gaia"
+      },
+      "cure": {
+        "id": "cure",
+        "label": "Cure"
+      }
     },
     "djinn": {
       "id": "djinn",
