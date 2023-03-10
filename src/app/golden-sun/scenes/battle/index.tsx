@@ -2,7 +2,8 @@ import { cloneDeep } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import TransientPopup from '../../../popups/transient-popup';
 import ActionButton from '../../action-button';
-import MenuMove from '../../assets/sounds/MenuMove.wav';
+import MenuMove from '../../assets/sounds/fx/MenuMove.wav';
+import BattleTheme from '../../assets/sounds/bg/battle-theme.mp3';
 import menuSheet from '../../assets/sprites/Golden-Sun-Menu-Assets.png';
 import Menu from '../../data/battle-menu.json';
 import Party from '../../party';
@@ -13,6 +14,10 @@ const BattleMenu = Menu as MenuNode;
 // TODO (2023-03-06 17:40:33): Refactor menu code
 
 const Battle = () => {
+  const battleThemeRef = useRef(
+    new Audio(BattleTheme) as null | HTMLAudioElement
+  );
+  const { current: battleTheme } = battleThemeRef;
   const menuMoveRef = useRef(new Audio(MenuMove) as null | HTMLAudioElement);
   const { current: menuMove } = menuMoveRef;
   const { renderMessages, addTransientMessage } = TransientPopup();
@@ -38,6 +43,13 @@ const Battle = () => {
       setLoaded(true);
     }
   };
+
+  useEffect(() => {
+    if (battleTheme) {
+      battleTheme.volume = 0.10;
+      battleTheme.play();
+    }
+  }, []);
 
   useEffect(() => {
     loadSprites();
