@@ -1,8 +1,8 @@
 import { cloneDeep } from 'lodash';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import TransientPopup from '../../../popups/transient-popup';
 import ActionButton from '../../action-button';
-import SoundController from '../../assets/sounds';
+import SoundController, { SoundControllerContext } from '../../assets/sounds';
 import menuSheet from '../../assets/sprites/Golden-Sun-Menu-Assets.png';
 import Menu from '../../data/battle-menu.json';
 import Party from '../../party';
@@ -13,7 +13,7 @@ const BattleMenu = Menu as MenuNode;
 // TODO (2023-03-06 17:40:33): Refactor menu code
 
 const Battle = () => {
-  const sounds = SoundController();
+  const sounds = useContext(SoundControllerContext);
 
   const { renderMessages, addTransientMessage } = TransientPopup();
   const [actionMenu, setActionMenu] = useState(cloneDeep(BattleMenu));

@@ -1,12 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import './app.scss';
-import Battle from './golden-sun/scenes/battle';
+import Main from './golden-sun/main';
 
 export function App() {
 
   return (
     <div className="App">
-      <Battle />
+      <Main />
     </div>
   );
 }
