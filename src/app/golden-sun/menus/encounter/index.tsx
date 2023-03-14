@@ -6,14 +6,38 @@ import getSprites from '../../util/sprite-sheet-parser';
 import menuSheet from '../../assets/sprites/Golden-Sun-Menu-Assets.png';
 import { SoundControllerContext } from '../../assets/sounds';
 import TransientPopup from 'src/app/popups/transient-popup';
+import {
+  Decision,
+  ConfirmTarget,
+  Desummon,
+  Energy,
+  Fight,
+  Items,
+  Status,
+  Summon,
+} from './sub-menus';
+import { BattleStateContext } from './context/battle-state';
 const Menu = battleMenu as MenuNode;
 
+const BattleMenus = {
+  decision: <Decision></Decision>,
+  fight: <Fight></Fight>,
+  run: <div>Run</div>,
+  status: <Status></Status>,
+  attack: <div>Atttack</div>,
+  energy: <Energy></Energy>,
+  summon: <Summon></Summon>,
+  desummon: <Desummon></Desummon>,
+  items: <Items></Items>,
+  'confirm-target': <ConfirmTarget></ConfirmTarget>,
+} as BattleMenus;
+
 const BattleMenu = () => {
+  const {menuState} = useContext(BattleStateContext);
   const { renderMessages, addTransientMessage } = TransientPopup();
   const sounds = useContext(SoundControllerContext);
   const [loaded, setLoaded] = useState(false);
   const [actionMenu, setActionMenu] = useState(cloneDeep(Menu));
-  const [toolTip, setToolTip] = useState('');
   const [menuPosition, setMenuPosition] = useState({
     context: actionMenu,
     path: '',
@@ -25,7 +49,10 @@ const BattleMenu = () => {
 
     if (!menu.loaded && options) {
       setLoaded(false);
-      const sprites = await getSprites(menuSheet, options.map((option) => menu[option].map));
+      const sprites = await getSprites(
+        menuSheet,
+        options.map((option) => menu[option].map)
+      );
       options.forEach((option, i) => (menu[option].sprite = sprites[i]));
       setActionMenu(actionMenu);
       menu.loaded = true;
@@ -76,7 +103,7 @@ const BattleMenu = () => {
     // Run Behavior
     else {
       if (action) action();
-      else addTransientMessage(actionId);      
+      else addTransientMessage(actionId);
     }
   };
 
@@ -105,21 +132,7 @@ const BattleMenu = () => {
                 menu[itemId],
                 menuPosition.context[itemId].action
               );
-              sounds.menuPositive.Play();
             }
-          }}
-          onMouseOver={() => {
-            if (menuPosition.context)
-              setToolTip(menuPosition.context[itemId].label);
-            sounds.menuMove.Play();
-          }}
-          onMouseLeave={() => {
-            setToolTip('');
-          }}
-          onFocus={() => {
-            if (menuPosition.context)
-              setToolTip(menuPosition.context[itemId].label);
-            sounds.menuMove.Play();
           }}
         />
       );
@@ -138,8 +151,9 @@ const BattleMenu = () => {
           alt="Portrait"
         />
         <div id="Gap" />
-        <div className="actions">{getMenu()}</div>
-        <div className="menu-frame" id={toolTip} />
+        {BattleMenus[menuState]}
+        {/* <div className="actions">{getMenu()}</div>
+        <div className="menu-frame" id={toolTip} /> */}
       </div>
     </>
   );

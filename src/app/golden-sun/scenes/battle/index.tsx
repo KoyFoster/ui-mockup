@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { SoundControllerContext } from '../../assets/sounds';
 import BattleMenu from '../../menus/encounter';
+import BattleState from '../../menus/encounter/context/battle-state';
 import Party from '../../party';
 import './index.scss';
 
@@ -17,7 +18,9 @@ const Battle = () => {
   return (
     <div className="gs-battle">
       <Party />
-      <BattleMenu />
+      <BattleState>
+        <BattleMenu />
+      </BattleState>
     </div>
   );
 };
