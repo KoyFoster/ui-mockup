@@ -1,19 +1,30 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ActionButton from 'src/app/golden-sun/action-button';
+import { SpriteControllerContext } from 'src/app/golden-sun/assets/context';
 import { BattleStateContext } from '../../context/battle-state';
 
 const Fight = () => {
   const { setMenuState } = useContext(BattleStateContext);
   const [toolTip, setToolTip] = useState('');
+  const { getSpriteByKey, loadSprite } = useContext(SpriteControllerContext);
+
+  useEffect(() => {
+    loadSprite([12, 134, 24, 24], 'attack');
+    loadSprite([36, 134, 24, 24], 'energy');
+    loadSprite([60, 134, 24, 24], 'djinn');
+    loadSprite([84, 134, 24, 24], 'summon');
+    loadSprite([108, 134, 24, 24], 'items');
+    loadSprite([132, 134, 24, 24], 'defend');
+  }, [loadSprite]);
 
   return (
     <>
       <ActionButton
         key="attack"
         id="attack"
-        src={''}
+        src={getSpriteByKey('attack')}
         alt="attack"
-        tooltip="attack"
+        tooltip="Attack"
         onToolTip={setToolTip}
         onClick={() => {
           setMenuState({ type: 'GOTO', menu: 'attack' });
@@ -22,31 +33,31 @@ const Fight = () => {
       <ActionButton
         key="energy"
         id="energy"
-        src={''}
+        src={getSpriteByKey('energy')}
         alt="energy"
-        tooltip="energy"
+        tooltip="Energy"
         onToolTip={setToolTip}
         onClick={() => {
           setMenuState({ type: 'GOTO', menu: 'energy' });
         }}
       />
       <ActionButton
-        key="desummon"
-        id="desummon"
-        src={''}
-        alt="desummon"
-        tooltip="desummon"
+        key="djinn"
+        id="djinn"
+        src={getSpriteByKey('djinn')}
+        alt="djinn"
+        tooltip="Djinn"
         onToolTip={setToolTip}
         onClick={() => {
-          setMenuState({ type: 'GOTO', menu: 'desummon' });
+          setMenuState({ type: 'GOTO', menu: 'djinn' });
         }}
       />
       <ActionButton
         key="summon"
         id="summon"
-        src={''}
+        src={getSpriteByKey('summon')}
         alt="summon"
-        tooltip="summon"
+        tooltip="Summon"
         onToolTip={setToolTip}
         onClick={() => {
           setMenuState({ type: 'GOTO', menu: 'summon' });
@@ -55,9 +66,9 @@ const Fight = () => {
       <ActionButton
         key="items"
         id="items"
-        src={''}
+        src={getSpriteByKey('items')}
         alt="items"
-        tooltip="items"
+        tooltip="Items"
         onToolTip={setToolTip}
         onClick={() => {
           setMenuState({ type: 'GOTO', menu: 'items' });
@@ -66,9 +77,9 @@ const Fight = () => {
       <ActionButton
         key="defend"
         id="defend"
-        src={''}
+        src={getSpriteByKey('defend')}
         alt="defend"
-        tooltip="defend"
+        tooltip="Defend"
         onToolTip={setToolTip}
         onClick={() => {
           setMenuState({ type: 'GOTO', menu: 'defend' });

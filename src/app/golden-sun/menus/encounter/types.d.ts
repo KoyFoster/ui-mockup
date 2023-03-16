@@ -6,7 +6,7 @@ type BattleMenuStates =
   | 'attack'
   | 'energy'
   | 'summon'
-  | 'desummon'
+  | 'djinn'
   | 'items'
   | 'defend'
   | 'confirm-target';

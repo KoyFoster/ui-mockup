@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ActionButton from 'src/app/golden-sun/action-button';
+import { SpriteControllerContext } from 'src/app/golden-sun/assets/context';
 import { BattleStateContext } from '../../context/battle-state';
 
 // Use menu context for menu state management
@@ -7,13 +8,20 @@ import { BattleStateContext } from '../../context/battle-state';
 const Decision = () => {
   const { setMenuState } = useContext(BattleStateContext);
   const [toolTip, setToolTip] = useState('');
+  const { getSpriteByKey, loadSprite } = useContext(SpriteControllerContext);
+
+  useEffect(() => {
+    loadSprite([12, 106, 24, 24], 'fight');
+    loadSprite([36, 106, 24, 24], 'run');
+    loadSprite([60, 106, 24, 24], 'status');
+  }, [loadSprite]);
 
   return (
     <>
       <ActionButton
         key="fight"
         id="fight"
-        src={''}
+        src={getSpriteByKey('fight')}
         alt="fight"
         tooltip="Fight"
         onToolTip={setToolTip}
@@ -24,7 +32,7 @@ const Decision = () => {
       <ActionButton
         key="run"
         id="run"
-        src={''}
+        src={getSpriteByKey('run')}
         alt="run"
         tooltip="Run"
         onToolTip={setToolTip}
@@ -35,7 +43,7 @@ const Decision = () => {
       <ActionButton
         key="status"
         id="status"
-        src={''}
+        src={getSpriteByKey('status')}
         alt="status"
         tooltip="Status"
         onToolTip={setToolTip}

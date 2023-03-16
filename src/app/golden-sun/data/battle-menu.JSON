@@ -5,7 +5,7 @@
   "fight": {
     "id": "fight",
     "label": "Fight",
-    "map": [12, 106, 24, 24],
+    "map": ,
     "sprite": "",
     "parent": ".",
 

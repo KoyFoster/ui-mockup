@@ -3,7 +3,7 @@ import TransientPopup from 'src/app/popups/transient-popup';
 import { SoundControllerContext } from '../../assets/sounds';
 import { BattleStateContext } from './context/battle-state';
 import {
-  ConfirmTarget, Decision, Desummon,
+  ConfirmTarget, Decision, Djinn,
   Energy,
   Fight,
   Items,
@@ -19,7 +19,7 @@ const BattleMenus = {
   attack: <div>Atttack</div>,
   energy: <Energy></Energy>,
   summon: <Summon></Summon>,
-  desummon: <Desummon></Desummon>,
+  djinn: <Djinn></Djinn>,
   items: <Items></Items>,
   defend: <div>Defend</div>,
   'confirm-target': <ConfirmTarget></ConfirmTarget>,
