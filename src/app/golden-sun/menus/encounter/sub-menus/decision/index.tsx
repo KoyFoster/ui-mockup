@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ActionButton from 'src/app/golden-sun/action-button';
+import { BattleStateContext } from '../../context/battle-state';
 
 // Use menu context for menu state management
 // Use sprite context
 const Decision = () => {
+  const { setMenuState } = useContext(BattleStateContext);
   const [toolTip, setToolTip] = useState('');
 
   return (
@@ -11,36 +13,34 @@ const Decision = () => {
       <ActionButton
         key="fight"
         id="fight"
-        src={'{sprite}'}
+        src={''}
         alt="fight"
-        tooltip='Fight'
+        tooltip="Fight"
         onToolTip={setToolTip}
         onClick={() => {
-            /* Enter Menu */
+          setMenuState({ type: 'GOTO', menu: 'fight' });
         }}
       />
-      
       <ActionButton
         key="run"
         id="run"
-        src={'{sprite}'}
+        src={''}
         alt="run"
-        tooltip='Run'
+        tooltip="Run"
         onToolTip={setToolTip}
         onClick={() => {
-            /* Enter Menu */
+          setMenuState({ type: 'GOTO', menu: 'run' });
         }}
       />
-      
       <ActionButton
         key="status"
         id="status"
-        src={'{sprite}'}
+        src={''}
         alt="status"
-        tooltip='Status'
+        tooltip="Status"
         onToolTip={setToolTip}
         onClick={() => {
-            /* Enter Menu */
+          setMenuState({ type: 'GOTO', menu: 'status' });
         }}
       />
       <div className="menu-frame" id={toolTip} />

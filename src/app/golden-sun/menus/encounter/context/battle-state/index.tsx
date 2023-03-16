@@ -1,11 +1,16 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useReducer, useState } from 'react';
+import battleMenuReducer from '../../../reducers/battleMenuReducer';
 
 export const BattleStateContext = createContext({
-  menuState: 'decision',
-} as BattleStateProps);
+  menuState: {},
+} as { menuState: BattleMenuState; setMenuState: React.Dispatch<BattleMenuAction>; });
 
-const BattleState = ({ children }: { children: React.ReactNode | string }) => {
-  const [menuState, setMenuState] = useState('decision' as BattleMenuStates);
+const DEBUG = true;
+const BattleState = ({ children }: { children: React.ReactNode }) => {
+  const [menuState, setMenuState] = useReducer(battleMenuReducer, {
+    menu: 'decision',
+    history: [],
+  } as BattleMenuState);
 
   const value = {
     menuState,
@@ -14,6 +19,14 @@ const BattleState = ({ children }: { children: React.ReactNode | string }) => {
 
   return (
     <BattleStateContext.Provider value={value}>
+      {!DEBUG || (
+        <>
+          Menu: {menuState.menu} History:{' '}
+          {menuState.history.map((mh) => {
+            return `[${mh}]`;
+          })}
+        </>
+      )}
       {children}
     </BattleStateContext.Provider>
   );
