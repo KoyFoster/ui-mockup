@@ -36,15 +36,8 @@ img {
     -ms-interpolation-mode: nearest-neighbor;
 }
 
-.portrait {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-
 .menu-frame {
     display: flex;
-    float: right;
 
     border: 16px solid grey;
     border-radius: 8px;
@@ -54,8 +47,6 @@ img {
     width: fit-content;
     background-color: #EEEE;
 
-    transition: width ease-out 100ms,
-        height ease-out 100ms;
 
     &::before {
         content: attr(id);
@@ -92,28 +83,34 @@ img {
     padding-right: 16px;
 }
 
-.menu {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
+.portrait {
+    position: absolute;
     bottom: 0;
+    left: 0;
+}
 
+/* fixed to viewport */
+.menu-container {
     display: flex;
     flex-direction: row;
+    position: fixed;
+    bottom: 0;
     width: 100%;
 
-    >img#Portrait {
-        background-color: orange;
-        width: 128px;
-        height: 128px;
+    >.battle-menu-container {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        flex-direction: row;
+        width: 100%;
+
+        &>.battle-menu {}
+
+        &>.menu-frame {
+            width: 16rem; // about 256px
+            height: 6rem; // about 256px
+        }
     }
 
-    >div#Gap {
-        flex-grow: 1;
-    }
-
-    >.menu-frame {
-        width: 16rem; // about 256px
-        height: 6rem; // about 256px
-    }
 }

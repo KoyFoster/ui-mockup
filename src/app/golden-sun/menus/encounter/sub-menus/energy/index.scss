@@ -1,8 +1,22 @@
 .energy-menu {
+    &~.menu-frame {
+        transition: width ease-out 1000ms;
+        width: 96rem !important;
+    }
 
+    .grow {
+        height: 24rem !important;
+    }
+
+    .menu-options-menu {
+        width: 48rem;
+        height: 2rem;
+        transition: height ease-out 500ms;
+    }
 }
 
-.energy-menu~.menu-frame {
-    width: 512px !important;
-    height: 512px !important;
+/* I'm no longer working on firefox */
+.battle-menu-container:has(.energy-menu) {
+    flex-direction: column-reverse !important;
+    align-items: flex-end;
 }

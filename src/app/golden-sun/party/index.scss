@@ -1,6 +1,5 @@
 .team {
-    position: left;
-    right: 0;
+    float: right;
 
     &::before {
         content: none !important;
