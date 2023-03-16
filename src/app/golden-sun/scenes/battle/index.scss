@@ -36,6 +36,12 @@ img {
     -ms-interpolation-mode: nearest-neighbor;
 }
 
+.portrait {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
 .menu-frame {
     display: flex;
     float: right;
@@ -47,6 +53,16 @@ img {
 
     width: fit-content;
     background-color: #EEEE;
+
+    transition: width ease-out 100ms,
+        height ease-out 100ms;
+
+    &::before {
+        content: attr(id);
+        padding: 16px;
+        background-color: $menu-frame-bg;
+        width: 100%;
+    }
 }
 
 .mate {
@@ -71,12 +87,10 @@ img {
     &::before {
         content: 'PP';
         flex-grow: 1;
-
     }
 
     padding-right: 16px;
 }
-
 
 .menu {
     display: flex;
@@ -99,15 +113,7 @@ img {
     }
 
     >.menu-frame {
-        display: flex;
-        width: 256px;
-        align-items: stretch;
-
-        &::before {
-            content: attr(id);
-            padding: 16px;
-            background-color: $menu-frame-bg;
-            width: 100%;
-        }
+        width: 16rem; // about 256px
+        height: 6rem; // about 256px
     }
 }

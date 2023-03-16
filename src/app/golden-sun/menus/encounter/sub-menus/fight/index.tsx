@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import ActionButton from 'src/app/golden-sun/action-button';
 import { SpriteControllerContext } from 'src/app/golden-sun/assets/context';
 import { BattleStateContext } from '../../context/battle-state';
+import './index.scss';
 
 const Fight = () => {
-  const { setMenuState } = useContext(BattleStateContext);
-  const [toolTip, setToolTip] = useState('');
+  const { setMenuState, setToolTip } = useContext(BattleStateContext);
   const { getSpriteByKey, loadSprite } = useContext(SpriteControllerContext);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Fight = () => {
   }, [loadSprite]);
 
   return (
-    <>
+    <div className='battle-menu fight-menu'>
       <ActionButton
         key="attack"
         id="attack"
@@ -85,8 +85,7 @@ const Fight = () => {
           setMenuState({ type: 'GOTO', menu: 'defend' });
         }}
       />
-      <div className="menu-frame" id={toolTip} />
-    </>
+    </div>
   );
 };
 

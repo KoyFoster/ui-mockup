@@ -12,22 +12,22 @@ import {
 } from './sub-menus';
 
 const BattleMenus = {
-  decision: <Decision></Decision>,
-  fight: <Fight></Fight>,
-  run: <div>Run</div>,
-  status: <Status></Status>,
-  attack: <div>Atttack</div>,
-  energy: <Energy></Energy>,
-  summon: <Summon></Summon>,
-  djinn: <Djinn></Djinn>,
-  items: <Items></Items>,
-  defend: <div>Defend</div>,
-  'confirm-target': <ConfirmTarget></ConfirmTarget>,
+  decision: <Decision ></Decision>,
+  fight: <Fight ></Fight>,
+  run: <div >Run</div>,
+  status: <Status ></Status>,
+  attack: <div >Atttack</div>,
+  energy: <Energy ></Energy>,
+  summon: <Summon ></Summon>,
+  djinn: <Djinn ></Djinn>,
+  items: <Items ></Items>,
+  defend: <div >Defend</div>,
+  'confirm-target': <ConfirmTarget ></ConfirmTarget>,
 } as BattleMenus;
 
 const BattleMenu = () => {
   const {menuNagtive} = useContext(SoundControllerContext);
-  const { menuState, setMenuState } = useContext(BattleStateContext);
+  const { menuState, setMenuState, toolTip } = useContext(BattleStateContext);
   const { renderMessages, addTransientMessage } = TransientPopup();
 
   useEffect(() => {
@@ -43,25 +43,6 @@ const BattleMenu = () => {
     };
   }, [menuNagtive, setMenuState]);
 
-  // const handleActionClick = (
-  //   actionId: string,
-  //   menu?: MenuNode,
-  //   action?: () => void
-  // ) => {
-  //   // Check for menu
-  //   if (menu?.options) {
-  //     setMenuPosition({
-  //       context: menu,
-  //       path: '',
-  //     });
-  //   }
-  //   // Run Behavior
-  //   else {
-  //     if (action) action();
-  //     else addTransientMessage(actionId);
-  //   }
-  // };
-
   return (
     <>
       {renderMessages()}
@@ -70,9 +51,11 @@ const BattleMenu = () => {
           id="Portrait"
           src="../assets/sprites/portrait.jpg"
           alt="Portrait"
+          className='portrait'
         />
         <div id="Gap" />
         {BattleMenus[menuState.menu]}
+      <div key="menu-tool-tip" className="menu-frame" id={toolTip} />
       </div>
     </>
   );

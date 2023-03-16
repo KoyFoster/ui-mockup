@@ -1,6 +1,10 @@
 .team {
     position: left;
     right: 0;
+
+    &::before {
+        content: none !important;
+    }
 }
 
 .mate {

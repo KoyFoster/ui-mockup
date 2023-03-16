@@ -1,10 +1,11 @@
-import React from "react";
-
-
+import './index.scss';
 
 const Energy = () => {
-
-    return <div>[Energy]</div>
-}
+  return (
+    <div className='battle-menu energy-menu'>
+      <div key="menu-options-menu" className="menu-frame" />
+    </div>
+  );
+};
 
 export default Energy;

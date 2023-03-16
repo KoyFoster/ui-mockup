@@ -3,7 +3,7 @@ import battleMenuReducer from '../../../reducers/battleMenuReducer';
 
 export const BattleStateContext = createContext({
   menuState: {},
-} as { menuState: BattleMenuState; setMenuState: React.Dispatch<BattleMenuAction>; });
+} as { menuState: BattleMenuState; setMenuState: React.Dispatch<BattleMenuAction>; toolTip: string; setToolTip: React.Dispatch<React.SetStateAction<string>> });
 
 const DEBUG = true;
 const BattleState = ({ children }: { children: React.ReactNode }) => {
@@ -11,10 +11,13 @@ const BattleState = ({ children }: { children: React.ReactNode }) => {
     menu: 'decision',
     history: [],
   } as BattleMenuState);
+  const [toolTip, setToolTip] = useState('');
 
   const value = {
     menuState,
     setMenuState,
+    toolTip,
+    setToolTip,
   };
 
   return (
