@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import spriteSheet from 'src/assets/sprites/Golden-Sun-Menu-Assets.png';
+import spriteSheet from '../sprites/battle-screen-spritesheet.png';
 import getSprites from '../../util/sprite-sheet-parser';
 
 export const SpriteControllerContext = createContext(
@@ -10,6 +10,7 @@ export const SpriteControllerContext = createContext(
   }
 );
 
+// TODO: Seemingly still running multiple times for existing/loading assets
 const SpriteController = ({ children }: { children: React.ReactNode }) => {
   const [Sprites, setSprites] = useState({} as { [key: string]: string });
 

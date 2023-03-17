@@ -18,6 +18,9 @@
         // List sandbox
         &>ul {
             position: absolute;
+            grid-template-rows: repeat(20, 0fr);
+            column-gap: 0;
+
             left: 0;
             right: 0;
             bottom: 0;
@@ -27,19 +30,62 @@
             margin: 0px;
 
             &>li {
-                margin: 0.75rem;
                 list-style-type: none;
+                display: grid;
+                grid-template-columns: 2fr 0.5fr 0.5fr 0.5fr;
+                align-items: center;
+                align-content: center;
+                margin: 0.75rem;
+
+                &>:nth-child(1) {}
+
+                &>:nth-child(2) {}
+
+                &>:nth-child(3) {
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: center;
+                    &>img {
+                        width: 1.15rem;
+                        height: 1.15rem;    
+                    }
+                }
+
+                &>:nth-child(4) {
+                    width: 4rem;
+                    height: 1.5rem;
+
+                }
+
+
                 &:hover {
                     background-color: #ffffff33;
                     filter: brightness(200%);
+
+                    &>button>img {
+                        filter: brightness(50%);
+                    }
                 }
 
                 &>button {
+                    display: flex;
+                    align-items: center;
+
                     font: inherit;
                     color: inherit;
                     background: none;
                     border: none;
                     text-shadow: inherit;
+
+                    &>img {
+                        width: 2rem;
+                        transform: scale(1.5);
+                        padding-right: 0.5rem;
+                    }
+                }
+
+                &>* {
+                    // border: 2px solid red !important;
                 }
             }
         }
