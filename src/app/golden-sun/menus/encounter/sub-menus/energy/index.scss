@@ -9,9 +9,40 @@
     }
 
     .menu-options-menu {
+        display: flex;
+        position: relative;
         width: 48rem;
         height: 2rem;
         transition: height ease-out 500ms;
+
+        // List sandbox
+        &>ul {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+
+            padding: 0.25rem;
+            margin: 0px;
+
+            &>li {
+                margin: 0.75rem;
+                list-style-type: none;
+                &:hover {
+                    background-color: #ffffff33;
+                    filter: brightness(200%);
+                }
+
+                &>button {
+                    font: inherit;
+                    color: inherit;
+                    background: none;
+                    border: none;
+                    text-shadow: inherit;
+                }
+            }
+        }
     }
 }
 
