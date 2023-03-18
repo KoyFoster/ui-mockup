@@ -27,7 +27,7 @@
     }
 
 
-    &:hover {
+    &:hover, &:focus-within        {
         background-color: #ffffff33;
         filter: brightness(200%);
 

@@ -31,8 +31,18 @@ const ActionMenuItem = ({
   const tp = tooltip || id || '';
 
   return (
-    <li className="action-menu-item" id={id}>
-      <button>
+    <li
+      className="action-menu-item"
+      id={id}
+      onMouseOver={(e) => {
+        sounds.menuMove.Play();
+      }}
+    >
+      <button
+        onFocus={(e) => {
+          sounds.menuMove.Play();
+        }}
+      >
         <img src={icon} alt="Ragnorak" />
         {label}
       </button>
