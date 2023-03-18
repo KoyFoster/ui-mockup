@@ -1,4 +1,5 @@
 .energy-menu {
+
     &~.menu-frame {
         transition: width ease-out 1000ms;
         width: 96rem !important;
@@ -15,8 +16,19 @@
         height: 2rem;
         transition: height ease-out 500ms;
 
+        >.simple-page-nav {
+            position: absolute;
+            right: 0;
+            transform: translateY(-1rem);
+            z-index: 1;
+        }
+
         // List sandbox
         &>ul {
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+
             position: absolute;
             grid-template-rows: repeat(20, 0fr);
             column-gap: 0;
@@ -29,66 +41,32 @@
             padding: 0.25rem;
             margin: 0px;
 
-            &>li {
-                list-style-type: none;
-                display: grid;
-                grid-template-columns: 2fr 0.5fr 0.5fr 0.5fr;
-                align-items: center;
-                align-content: center;
-                margin: 0.75rem;
-
-                &>:nth-child(1) {}
-
-                &>:nth-child(2) {}
-
-                &>:nth-child(3) {
-                    display: flex;
-                    justify-content: flex-end;
-                    align-items: center;
-                    &>img {
-                        width: 1.15rem;
-                        height: 1.15rem;    
-                    }
-                }
-
-                &>:nth-child(4) {
-                    width: 4rem;
-                    height: 1.5rem;
-
-                }
-
-
-                &:hover {
-                    background-color: #ffffff33;
-                    filter: brightness(200%);
-
-                    &>button>img {
-                        filter: brightness(50%);
-                    }
-                }
-
-                &>button {
-                    display: flex;
-                    align-items: center;
-
-                    font: inherit;
-                    color: inherit;
-                    background: none;
-                    border: none;
-                    text-shadow: inherit;
-
-                    &>img {
-                        width: 2rem;
-                        transform: scale(1.5);
-                        padding-right: 0.5rem;
-                    }
-                }
-
-                &>* {
-                    // border: 2px solid red !important;
-                }
-            }
+            &>li {}
         }
+    }
+}
+
+/* Fixed Pages: There should be more than a few pages of 5 items each */
+.action-menu {
+    &>li {
+        display: none;
+    }
+
+    &.p1>li:nth-of-type(-n+5) {
+        display: grid;
+    }
+    &.p2>li:nth-of-type(n+6):nth-of-type(-n+10) {
+        display: grid;
+    }    
+    &.p3>li:nth-of-type(n+11):nth-of-type(-n+15) {
+        display: grid;
+    }       
+    &.p4>li:nth-of-type(n+16):nth-of-type(-n+20) {
+        display: grid;
+    }
+    
+    &.p0>li {
+        display: grid;
     }
 }
 
