@@ -1,20 +1,30 @@
 .energy-menu {
+    display: block !important;
+    >.menu-options-menu {
+        display: block !important;
+        >.action-menu {
+            display: inline-block !important;
+
+        }
+    }
+}
+
+.energy-menu {
 
     &~.menu-frame {
         transition: width ease-out 1000ms;
-        width: 96rem !important;
+        width: 64rem !important;
     }
 
     .grow {
-        height: 24rem !important;
+        max-height: 1000px !important;
     }
 
     .menu-options-menu {
-        display: flex;
         position: relative;
-        width: 48rem;
-        height: 2rem;
-        transition: height ease-out 500ms;
+        max-height: 0px;
+        min-width: 48rem;
+        transition: max-height 1s ease-out;
 
         >.simple-page-nav {
             position: absolute;
@@ -29,7 +39,6 @@
             justify-content: center;
             align-items: center;
 
-            position: absolute;
             grid-template-rows: repeat(20, 0fr);
             column-gap: 0;
 
@@ -47,6 +56,7 @@
 }
 
 /* Fixed Pages: There should be more than a few pages of 5 items each */
+// TODO: Use variables to track page size
 .action-menu {
     &>li {
         display: none;

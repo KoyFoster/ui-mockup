@@ -38,21 +38,25 @@ img {
 
 .menu-frame {
     display: flex;
+    position: relative;
+    z-index: 0;
 
     border: 16px solid grey;
     border-radius: 8px;
     border-style: double;
-    background-color: #DDDDDD;
-
-    width: fit-content;
     background-color: #EEEE;
-
 
     &::before {
         content: attr(id);
+        position: absolute;
+        z-index: -1;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+
         padding: 16px;
         background-color: $menu-frame-bg;
-        width: 100%;
     }
 }
 
@@ -98,8 +102,8 @@ img {
     width: 100%;
 
     >.battle-menu-container {
-        position: relative;
         display: flex;
+        position: relative;
         flex-wrap: wrap;
         justify-content: flex-end;
         flex-direction: row;
