@@ -18,7 +18,7 @@ const BattleMenus = {
   fight: <Fight></Fight>,
   run: <div>Run</div>,
   status: <Status></Status>,
-  attack: <div>Atttack</div>,
+  attack: <div>Attack</div>,
   energy: <Energy></Energy>,
   summon: <Summon></Summon>,
   djinn: <Djinn></Djinn>,
