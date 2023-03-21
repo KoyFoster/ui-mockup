@@ -8,6 +8,13 @@
 
 .gs-battle {
     font: 32px DeterminationMonoWeb;
+    position: absolute;    
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    border: 4px dashed cyan; 
 }
 
 $menu-frame-bg: #437286;
@@ -95,19 +102,20 @@ img {
 
 /* fixed to viewport */
 .menu-container {
-    display: flex;
-    flex-direction: row;
-    position: fixed;
+    position: absolute;
     bottom: 0;
-    width: 100%;
+    left: 0;
+    right: 0;
 
     >.battle-menu-container {
         display: flex;
         position: relative;
-        flex-wrap: wrap;
         justify-content: flex-end;
-        flex-direction: row;
-        width: 100%;
+
+        border: 4px dashed red;
+
+        left: 0;
+        right: 0;
 
         &>.battle-menu {}
 

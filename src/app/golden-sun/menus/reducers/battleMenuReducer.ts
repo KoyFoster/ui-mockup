@@ -7,7 +7,7 @@ const battleMenuReducer = (
   state: BattleMenuState,
   action: BattleMenuAction
 ): BattleMenuState => {
-  console.log('battleMenuReducer:', 'State:', state, 'Action:', action);
+  console.group('battleMenuReducer:', 'State:', state, 'Action:', action);
   switch (action.type) {
     case 'GOTO': {
       if (action.menu === state.menu || !action.menu) break;
