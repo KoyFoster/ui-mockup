@@ -18,16 +18,21 @@
 .simple-page-nav {
     display: flex;
 
-    &>button:nth-of-type(1) {
+    &>button:nth-of-type(1):not(:disabled) {
         animation-name: spring-left;
         animation-duration: 0.3s;
         animation-iteration-count: infinite;
         animation-direction: alternate;
     }
-    &>button:nth-of-type(2) {
+    &>button:nth-of-type(2):not(:disabled) {
         animation-name: spring-right;
         animation-duration: 0.3s;
         animation-iteration-count: infinite;
         animation-direction: alternate;
+    }
+
+    &>button:disabled {        
+        cursor: not-allowed;
+        filter: brightness(50%);
     }
 }

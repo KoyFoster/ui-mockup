@@ -1,0 +1,65 @@
+.menu-options.grow {
+    max-height: 1000px !important;
+}
+
+.menu-options {
+    max-height: 0px;
+    min-width: 48rem;
+    transition: max-height 1s ease-out;
+
+    >.simple-page-nav {
+        position: absolute;
+        right: 0;
+        transform: translateY(-1rem);
+        z-index: 1;
+    }
+
+    // List sandbox
+    &>ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+
+        grid-template-rows: repeat(20, 0fr);
+        column-gap: 0;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+
+        padding: 0.25rem;
+        margin: 0px;
+
+        &>li {}
+    }
+
+    /* Fixed Pages: There should be more than a few pages of 5 items each */
+    // TODO: Use variables to track page size
+    >.action-menu {
+        overflow: hidden;
+        &>li {
+            display: none;
+        }
+
+        &.p1>li:nth-of-type(-n+5) {
+            display: grid;
+        }
+
+        &.p2>li:nth-of-type(n+6):nth-of-type(-n+10) {
+            display: grid;
+        }
+
+        &.p3>li:nth-of-type(n+11):nth-of-type(-n+15) {
+            display: grid;
+        }
+
+        &.p4>li:nth-of-type(n+16):nth-of-type(-n+20) {
+            display: grid;
+        }
+
+        &.p0>li {
+            display: grid;
+        }
+    }
+}
