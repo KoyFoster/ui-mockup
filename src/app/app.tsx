@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import './app.scss';
-import Main from './golden-sun/main';
+import Main from './GoldenSun/main';
 
 export function App() {
 
