@@ -3,17 +3,6 @@ import { SoundControllerContext } from 'src/app/GoldenSun/assets/sounds';
 import { BattleStateContext } from 'src/app/GoldenSun/menus/Encounter/Context/BattleState';
 import './index.scss';
 
-interface ActionMenuItemProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  icon?: string;
-  element?: string;
-  range?: string;
-  alt?: string;
-  tooltip?: string;
-  label?: string;
-  onToolTip?: (tooltip: string) => void;
-}
-
 const ActionMenuItem = ({
   id,
   label,

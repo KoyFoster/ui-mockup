@@ -1,21 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import ActionMenuItem from '../action-menu-item';
-import VenusStar from 'src/app/GoldenSun/assets/sprites/icons/misc/Venus_Star.gif';
-import Ragnarok from 'src/app/GoldenSun/assets/sprites/icons/psynergy/Ragnarok.gif';
-import Range1 from 'src/app/GoldenSun/assets/sprites/icons/psynergy/range-1.gif';
 import PageNav from 'src/app/GoldenSun/components/PageNav';
 import './index.scss';
 
-
-const ActionMenu = () => {
+const ActionMenu = ({ children }: { children?: React.ReactElement<HTMLLIElement>[]  }) => {
   const ref = useRef(null as null | HTMLDivElement);
   const [mounted, setMounted] = useState(false);
   const [page, setPage] = useState('p1');
 
   useEffect(() => {
     if (ref.current && mounted) {
-      if(!ref.current.className.includes(' grow'))
-      ref.current.className += ' grow';
+      if (!ref.current.className.includes(' grow'))
+        ref.current.className += ' grow';
     } else {
       setMounted(true);
     }
@@ -31,177 +26,7 @@ const ActionMenu = () => {
         }}
       />
       <ul className={`action-menu ${page}`}>
-        <ActionMenuItem
-          id={'ragnorak'}
-          label={'Ragnorak1'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-          tooltip="Attack with a giant sword."
-        />
-        <ActionMenuItem
-          id={'spire'}
-          label={'Spire'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-          tooltip="Attack with a giant spike."
-        />
-        <ActionMenuItem
-          id={'earthquake'}
-          label={'Earthquake'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-          tooltip="Launch an earthquake"
-        />
-        <ActionMenuItem
-          id={'quake'}
-          label={'Quake'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'heal'}
-          label={'Heal'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'healing-light'}
-          label={'Healing Light2'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'gaia'}
-          label={'Gaia'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'ragnorak'}
-          label={'Something or another'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'ragnorak'}
-          label={'Ragnorak'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'spire'}
-          label={'Spire'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'earthquake'}
-          label={'Earthquake3'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'quake'}
-          label={'Quake'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'heal'}
-          label={'Heal'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'healing-light'}
-          label={'Healing Light'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'gaia'}
-          label={'Gaia'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'ragnorak'}
-          label={'Something or another4'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'ragnorak'}
-          label={'Ragnorak'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'spire'}
-          label={'Spire'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'earthquake'}
-          label={'Earthquake'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'quake'}
-          label={'Quake'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'heal'}
-          label={'Heal'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'healing-light'}
-          label={'Healing Light'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'gaia'}
-          label={'Gaia'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
-        <ActionMenuItem
-          id={'ragnorak'}
-          label={'Something or another'}
-          icon={Ragnarok}
-          element={VenusStar}
-          range={Range1}
-        />
+        {children}
       </ul>
     </div>
   );
