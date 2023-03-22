@@ -1,0 +1,22 @@
+.djinn-menu {
+    display: flex;
+    flex-direction: row;
+
+    >.menu-options {
+        min-width: 24rem;
+    }
+
+    >.stat-change {
+        min-width: 36rem;
+    }
+}
+
+/* Notice (2023-03-16): I'm no longer working on firefox */
+.battle-menu-container:has(.djinn-menu) {
+    flex-direction: column-reverse !important;
+    align-items: flex-end;
+
+    >.menu-frame {
+        min-width: 62rem;
+    }
+}

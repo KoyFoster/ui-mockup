@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import PageNav from 'src/app/GoldenSun/components/PageNav';
 import './index.scss';
 
-const ActionMenu = ({ children }: { children?: React.ReactElement<HTMLLIElement>[]  }) => {
+const ActionMenu = ({
+  children,
+}: {
+  children?:
+    | React.ReactElement<HTMLLIElement>[]
+    | React.ReactElement<HTMLLIElement>;
+}) => {
   const ref = useRef(null as null | HTMLDivElement);
   const [mounted, setMounted] = useState(false);
   const [page, setPage] = useState('p1');
@@ -25,9 +31,7 @@ const ActionMenu = ({ children }: { children?: React.ReactElement<HTMLLIElement>
           if (p) setPage(p);
         }}
       />
-      <ul className={`action-menu ${page}`}>
-        {children}
-      </ul>
+      <ul className={`action-menu ${page}`}>{children}</ul>
     </div>
   );
 };

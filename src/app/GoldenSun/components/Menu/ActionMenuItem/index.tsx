@@ -42,7 +42,7 @@ const ActionMenuItem = ({
           if(onMouseOver) onMouseOver(e);
         }}
       >
-        <img src={icon} alt="Ragnorak" />
+        {!icon || <img src={icon} alt="Ragnorak" />}
         {label}
       </button>
       <div>EP</div>{' '}
