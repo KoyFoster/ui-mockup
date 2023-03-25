@@ -1,0 +1,12 @@
+.item-menu {
+    &~.menu-frame {
+        transition: width ease-out 1000ms;
+        width: 64rem !important;
+    }
+}
+
+/* Notice (2023-03-16): I'm no longer working on firefox */
+.battle-menu-container:has(.item-menu) {
+    flex-direction: column-reverse !important;
+    align-items: flex-end;
+}
