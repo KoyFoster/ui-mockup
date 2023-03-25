@@ -16,11 +16,9 @@ const SpriteController = ({ children }: { children: React.ReactNode }) => {
 
   const loadSprite = (map: [number, number, number, number], key?: string) => {
     const k = key ? key : `${map[0]}:${map[1]}:${map[2]}:${map[3]}`;
+    
     if (Sprites[k]) return;
-    setSprites((sprites) => {
-      sprites[k] = 'loading';
-      return { ...sprites };
-    });
+    Sprites[k] = 'loading';
     getSprites(spriteSheet, [map]).then((result) => {
       if (result.length)
         setSprites((sprites) => {
