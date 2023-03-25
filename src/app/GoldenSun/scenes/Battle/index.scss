@@ -1,13 +1,4 @@
-@font-face {
-    font-family: 'DeterminationMonoWeb';
-    font-style: normal;
-    font-weight: normal;
-    src: local('DeterminationMonoWeb'),
-        url(../../assets/fonts/DeterminationMonoWeb.ttf) format('truetype');
-}
-
 .gs-battle {
-    font: 32px DeterminationMonoWeb;
     position: absolute;    
     top: 0;
     bottom: 0;

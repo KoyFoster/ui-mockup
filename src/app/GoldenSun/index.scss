@@ -1,4 +1,13 @@
+@font-face {
+    font-family: 'DeterminationMonoWeb';
+    font-style: normal;
+    font-weight: normal;
+    src: local('DeterminationMonoWeb'),
+        url(../../assets/fonts/DeterminationMonoWeb.ttf) format('truetype');
+}
+
 .golden-sun {
+    font: 32px DeterminationMonoWeb;
     position: relative;
     width: 90%;
     height: 90%;
