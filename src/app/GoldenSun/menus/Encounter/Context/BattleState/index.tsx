@@ -6,7 +6,7 @@ export const BattleStateContext = createContext({
   menuState: {},
 } as { menuState: BattleMenuState; setMenuState: React.Dispatch<BattleMenuAction>; toolTip: string; setToolTip: React.Dispatch<React.SetStateAction<string>> });
 
-const DEBUG = true;
+const DEBUG = false;
 const BattleState = ({ children }: { children: React.ReactNode }) => {
   const [menuState, setMenuState] = useReducer(battleMenuReducer, {
     menu: 'decision',
