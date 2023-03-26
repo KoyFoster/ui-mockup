@@ -1,0 +1,41 @@
+.volume-settings {
+    display: flex;
+    width: 24rem;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    z-index: 1 !important;
+
+
+    &>div>.action-button {
+        display: inline;
+        width: 7rem;
+        height: 7rem;
+    }
+
+    &>.expand-button {
+        position: absolute;
+        left: 0;
+        width: 3rem;
+        height: 3rem;
+    }
+
+
+    $dur: 0.25s;
+    transition: height $dur $dur ease-out,
+    width $dur ease-out;
+
+    &.expand {
+        height: 26rem;
+        width: 24rem;
+
+    }
+
+    &.collapse {
+        height: 3rem;
+        width: 3rem;
+        transition: height $dur ease-out,
+            width $dur $dur ease-out;
+        // border: none;
+    }
+}

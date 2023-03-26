@@ -11,7 +11,6 @@ const Battle = () => {
   const sounds = useContext(SoundControllerContext);
 
   useEffect(() => {
-    sounds.battleTheme.volume = 0.1;
     sounds.battleTheme.Play();
   }, []);
 

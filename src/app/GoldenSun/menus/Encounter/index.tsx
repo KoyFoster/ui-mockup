@@ -28,14 +28,14 @@ const BattleMenus = {
 } as BattleMenus;
 
 const BattleMenu = () => {
-  const { menuNagtive } = useContext(SoundControllerContext);
+  const { menuNegative } = useContext(SoundControllerContext);
   const { menuState, setMenuState, toolTip } = useContext(BattleStateContext);
   const { renderMessages, addTransientMessage } = TransientPopup();
 
   useEffect(() => {
     const onEscape = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return;
-      menuNagtive.Play();
+      menuNegative.Play();
       setMenuState({ type: 'RETURN' });
     };
 
@@ -43,7 +43,7 @@ const BattleMenu = () => {
     return () => {
       window.removeEventListener('keyup', onEscape);
     };
-  }, [menuNagtive, setMenuState]);
+  }, [menuNegative, setMenuState]);
 
   return (
     <>

@@ -12,5 +12,21 @@ interface Sounds {
   battleTheme: GameAudio;
   menuMove: GameAudio;
   menuPositive: GameAudio;
-  menuNagtive: GameAudio;
+  menuNegative: GameAudio;
+}
+
+interface VolumeProperties {
+  [index: string]: VolumeValue;
+}
+
+interface VolumeCalls {
+  props?: VolumeProperties;
+  getMusic: () => number;
+  getGeneralFX: () => number;
+  getMenuFX: () => number;
+}
+
+interface Volume {
+  properties: VolumeProperties;
+  calls: VolumeCalls;
 }

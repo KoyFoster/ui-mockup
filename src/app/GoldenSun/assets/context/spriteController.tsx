@@ -22,8 +22,7 @@ const SpriteController = ({ children }: { children: React.ReactNode }) => {
     getSprites(spriteSheet, [map]).then((result) => {
       if (result.length)
         setSprites((sprites) => {
-          sprites[k] = result[0];
-          console.log('New Sprite added to controller:', sprites);
+          sprites[k] = result[0];          
           return { ...sprites };
         });
     });
@@ -45,8 +44,8 @@ const SpriteController = ({ children }: { children: React.ReactNode }) => {
     >
       <canvas
         id="canvas"
-        width="128px"
-        height="128px"
+        width="8rem"
+        height="8rem"
         style={{ position: 'absolute' }}
       ></canvas>
       {children}
