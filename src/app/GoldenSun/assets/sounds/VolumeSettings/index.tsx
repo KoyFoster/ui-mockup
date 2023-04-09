@@ -70,7 +70,7 @@ const VolumeSettings = ({
 
   return (
     <div className={"volume-settings menu-frame" + (expand ? ' expand' : ' collapse')}>
-      <ActionButton className='expand-button' src={options} onClick={() => {
+      <ActionButton className='expand-button bounce-shrink' src={options} onClick={() => {
         setExpand(!expand);
       }} />
       Volume Settings

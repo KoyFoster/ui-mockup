@@ -8,6 +8,16 @@
     }
 }
 
+@keyframes action-button-bounce-shrink {
+    from {
+        transform: scale(100%);
+    }
+
+    to {
+        transform: scale(80%);
+    }
+}
+
 @keyframes action-button-flash {
     from {
         filter: opacity(0%);
@@ -50,8 +60,33 @@
     animation-direction: alternate;
 }
 
+@mixin bounce-shrink {
+    @include bounce;
+    animation-name: action-button-bounce-shrink;
+    transform-origin: center;
+}
+
 .battle-menu {
     position: relative;
+}
+
+.bounce {
+    &:is(:focus, :hover):not(:disabled) {
+        @include bounce;
+    }
+}
+
+.bounce-shrink {
+    &:is(:focus, :hover):not(:disabled) {
+        @include bounce-shrink;
+    }
+}
+
+.flash {
+    &:is(:focus, :hover):not(:disabled) {
+        @include flash;
+        filter: brightness(160%);
+    }
 }
 
 .action-button {
@@ -66,13 +101,6 @@
 
     border: none;
     box-shadow: transparent;
-
-
-    &:is(:focus, :hover):not(:disabled) {
-        @include flash;
-        @include bounce;
-        filter: brightness(160%);
-    }
 
     &:is(:empty) {
         border: 4px solid gold;

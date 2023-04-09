@@ -40,7 +40,7 @@ const ActionButton = ({
   return (
     <button
       type="button"
-      className={"action-button" + (className ? ` ${className}`: '')}
+      className={"action-button bounce flash" + (className ? ` ${className}`: '')}
       draggable="false"
       data-tool-tip={`${id}`}
       disabled={disabled}
