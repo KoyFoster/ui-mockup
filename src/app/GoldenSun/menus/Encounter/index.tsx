@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { CSSProperties, useContext, useEffect } from 'react';
 import TransientPopup from 'src/app/popups/TransientPopup';
 import { SoundControllerContext } from '../../assets/sounds';
 import { BattleStateContext } from './Context/BattleState';
@@ -27,7 +27,7 @@ const BattleMenus = {
   'confirm-target': <ConfirmTarget></ConfirmTarget>,
 } as BattleMenus;
 
-const BattleMenu = () => {
+const BattleMenu = ({style}: {style?: CSSProperties}) => {
   const { menuNegative } = useContext(SoundControllerContext);
   const { menuState, setMenuState, toolTip } = useContext(BattleStateContext);
   const { renderMessages, addTransientMessage } = TransientPopup();
@@ -55,7 +55,7 @@ const BattleMenu = () => {
           alt="Portrait"
           className="portrait"
         />
-        <div className='battle-menu-container'>
+        <div className='battle-menu-container' style={style}>
           {BattleMenus[menuState.menu]}
           <div key="menu-tool-tip" className="menu-frame" id={toolTip} />
         </div>

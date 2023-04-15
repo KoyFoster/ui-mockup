@@ -1,11 +1,24 @@
+canvas,
+img {
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
 .gs-battle {
-    position: absolute;    
+    position: absolute;
+    display: flex;
+    flex-direction: column;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     
-    border: 4px dashed cyan; 
+    // border: 4px dashed cyan; // Debug outline
+    overflow: hidden;
 }
 
 $menu-frame-bg: #437286;
@@ -22,16 +35,6 @@ canvas {
 .fade-out {
     transform: translateY(0px);
     opacity: 0%;
-}
-
-canvas,
-img {
-    image-rendering: optimizeSpeed;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: optimize-contrast;
-    image-rendering: pixelated;
-    -ms-interpolation-mode: nearest-neighbor;
 }
 
 .menu-frame {
@@ -92,7 +95,7 @@ img {
 }
 
 /* fixed to viewport */
-.menu-container {
+.menu-container {    
     position: absolute;
     bottom: 0;
     left: 0;
@@ -103,7 +106,7 @@ img {
         position: relative;
         justify-content: flex-end;
 
-        border: 4px dashed red;
+        // border: 4px dashed red; // Debug outline
 
         left: 0;
         right: 0;
