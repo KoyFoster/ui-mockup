@@ -1,4 +1,4 @@
-type EnergyElement =  'venus' | 'mars' | 'mercury' | 'jupiter';
+type EnergyElement = 'jupiter' | 'mars' | 'mercury' | 'venus';
 
 interface DjinnActionMenuItemProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
