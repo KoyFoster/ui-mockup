@@ -5,7 +5,7 @@ import venus from 'src/app/GoldenSun/assets/sprites/icons/misc/Venus_Star.gif';
 import ActionMenuItem from '../ActionMenuItem';
 import './index.scss';
 
-function getElement(element?: EnergyElement) {
+export const getElement = (element?: EnergyElement) => {
   console.log({element});
   if (element === 'venus') return venus;
   if (element === 'mars') return mars;
