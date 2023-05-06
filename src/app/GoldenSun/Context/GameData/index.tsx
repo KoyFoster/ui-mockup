@@ -1,7 +1,8 @@
-import { createContext, useReducer, useState } from 'react';
+import { createContext, useReducer, useRef, useState } from 'react';
 
 export const GameDataContext = createContext(
   {} as {
+    party: Warrior[];
     djinns: {
       djinns: Djinns;
       summons: Summons;
@@ -55,6 +56,7 @@ const djinnsReducer = (
 
   return state;
 };
+
 const Djinns = () => {
   const [djinns, setDjinnsState] = useReducer(djinnsReducer, {
     djinns: {
@@ -93,11 +95,47 @@ const Djinns = () => {
   return { djinns, setDjinnsState };
 };
 
+const Team = () => {
+  const members = useRef([
+    {
+      name: 'Issac',
+      hp: { cur: 83, max: 100 },
+      pp: { cur: 31, max: 100 },
+      disabled: false,
+    },
+    {
+      name: 'Garet',
+      hp: { cur: 83, max: 100 },
+      pp: { cur: 31, max: 100 },
+      disabled: false,
+    },
+    {
+      name: 'Ivan',
+      hp: { cur: 83, max: 100 },
+      pp: { cur: 31, max: 100 },
+      disabled: false,
+    },
+    {
+      name: 'Mary',
+      hp: { cur: 83, max: 100 },
+      pp: { cur: 31, max: 100 },
+      disabled: false,
+    },
+  ] as Warrior[]);
+  const [activeMembers, setActiveMembers] = useState(members.current);
+  const [inactiveMembers, setInactiveMembers] = useState([] as Warrior[]);
+
+  return { activeMembers };
+};
+
 const GameData = ({ children }: { children: React.ReactNode }) => {
   const { djinns, setDjinnsState } = Djinns();
+  const { activeMembers } = Team();
 
   return (
-    <GameDataContext.Provider value={{ djinns, setDjinnsState }}>
+    <GameDataContext.Provider
+      value={{ party: activeMembers, djinns, setDjinnsState }}
+    >
       {children}
     </GameDataContext.Provider>
   );

@@ -45,3 +45,19 @@ interface Summons {
     mercury: Summon[];
     venus: Summon[];
 }
+
+/**
+ * Play related types
+ */
+interface Warrior {
+    name: string;
+    hp: {
+        cur: number;
+        max: number;
+    },
+    pp: {
+        cur: number;
+        max: number;
+    },
+    disabled: boolean;
+}

@@ -1,24 +1,16 @@
+import { useContext } from 'react';
+import { GameDataContext } from '../Context/GameData';
 import './index.scss';
+import Mate from './mate';
 
 const Party = () => {
+  const { party } = useContext(GameDataContext);
+
   return (
     <div className="menu-frame team">
-      <div id="Koy" className="mate">
-        <div className="hp">83</div>
-        <div className="pp">31</div>
-      </div>
-      <div id="Garet" className="mate">
-        <div className="hp">70</div>
-        <div className="pp">25</div>
-      </div>
-      <div id="Ivan" className="mate">
-        <div className="hp">83</div>
-        <div className="pp">31</div>
-      </div>
-      <div id="Mary" className="mate">
-        <div className="hp">83</div>
-        <div className="pp">31</div>
-      </div>
+      {party?.map((m) => {
+        return <Mate id={m.name} hp={m.hp.cur} pp={m.pp.cur} />;
+      })}
     </div>
   );
 };
