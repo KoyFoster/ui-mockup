@@ -48,6 +48,8 @@ interface Summons {
 
 /**
  * Play related types
+ * Note: It's quite possible that enemy mobs will use this code as well.
+ * Cont: Maybe need to treat this as a generic entity class.
  */
 interface Warrior {
     name: string;

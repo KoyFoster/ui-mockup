@@ -8,6 +8,8 @@ export const BattleStateContext = createContext({
 
 const DEBUG = false;
 const BattleState = ({ children }: { children: React.ReactNode }) => {
+  const [turns, setTurns] = useState(0);
+  const [phase, SetPhase] = useState('start' as 'start' | 'team-A' | 'team-B' | 'simulate' | 'end');
   const [menuState, setMenuState] = useReducer(battleMenuReducer, {
     menu: 'decision',
     history: [],
