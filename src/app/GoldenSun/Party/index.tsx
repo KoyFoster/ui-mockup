@@ -9,7 +9,7 @@ const Party = () => {
   return (
     <div className="menu-frame team">
       {party?.map((m) => {
-        return <Mate id={m.name} hp={m.hp.cur} pp={m.pp.cur} />;
+        return <Mate key={m.name} id={m.name} hp={m.hp.cur} pp={m.pp.cur} />;
       })}
     </div>
   );
