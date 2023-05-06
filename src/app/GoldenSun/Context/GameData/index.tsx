@@ -1,6 +1,17 @@
 import { createContext, useReducer, useState } from 'react';
 
-export const GameDataContext = createContext({});
+export const GameDataContext = createContext(
+  {} as {
+    djinns: {
+      djinns: Djinns;
+      summons: Summons;
+    };
+    setDjinnsState: React.Dispatch<{
+      type: string;
+      value: string | number;
+    }>;
+  }
+);
 
 const DEBUG = false;
 
@@ -52,7 +63,24 @@ const Djinns = () => {
       jupiter: [],
       mars: [],
       mercury: [],
-      venus: [],
+      venus: [
+        {
+          ability: {
+            name: 'unknown',
+            desc: 'unknown',
+            action: () => {
+              console.log('Nothing happened');
+            },
+          },
+          desc: 'unknown',
+          element: 'venus',
+          enabled: true,
+          name: 'Solo',
+          set: false,
+          setTo: 'Issac',
+          standBy: -1,
+        },
+      ],
     },
     summons: {
       jupiter: [],
@@ -65,12 +93,12 @@ const Djinns = () => {
   return { djinns, setDjinnsState };
 };
 
-const GameData = () => {
+const GameData = ({ children }: { children: React.ReactNode }) => {
   const { djinns, setDjinnsState } = Djinns();
 
   return (
     <GameDataContext.Provider value={{ djinns, setDjinnsState }}>
-      [GameDataContext]
+      {children}
     </GameDataContext.Provider>
   );
 };

@@ -15,6 +15,10 @@ img {
     z-index: 2;
 
     display: flex;
+
+    &>.available-summons {
+        width: 6rem;
+    }
 }
 
 .gs-battle {
