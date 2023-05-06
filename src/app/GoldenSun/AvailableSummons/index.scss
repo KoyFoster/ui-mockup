@@ -1,12 +1,13 @@
 .available-summons {
-    position: absolute !important;
+    // position: absolute !important;
+    // top: 0 !important;
+    // right: 0 !important;
+    // z-index: 2;
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 
-    top: 0 !important;
-    right: 0 !important;
-    z-index: 2;
 
     &::before {
         content: none !important;

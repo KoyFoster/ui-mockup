@@ -17,8 +17,14 @@ const Battle = () => {
 
   return (
     <div className="gs-battle">
-      <BattleBackground src={BackgroundScene} style={{position: 'absolute', left: 0, right: 0, top: '-8rem'}}/>
-      <AvailableSummons/><Party />
+      <BattleBackground
+        src={BackgroundScene}
+        style={{ position: 'absolute', left: 0, right: 0, top: '-8rem' }}
+      />
+      <div className="battle-header">
+        <AvailableSummons />
+        <Party />
+      </div>
       <BattleState>
         <BattleMenu />
       </BattleState>

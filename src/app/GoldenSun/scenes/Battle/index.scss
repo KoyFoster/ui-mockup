@@ -8,6 +8,15 @@ img {
     -ms-interpolation-mode: nearest-neighbor;
 }
 
+.battle-header {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    z-index: 2;
+
+    display: flex;
+}
+
 .gs-battle {
     position: absolute;
     display: flex;
