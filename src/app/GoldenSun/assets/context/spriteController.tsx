@@ -10,19 +10,18 @@ export const SpriteControllerContext = createContext(
   }
 );
 
-// TODO: Seemingly still running multiple times for existing/loading assets
 const SpriteController = ({ children }: { children: React.ReactNode }) => {
   const [Sprites, setSprites] = useState({} as { [key: string]: string });
 
   const loadSprite = (map: [number, number, number, number], key?: string) => {
     const k = key ? key : `${map[0]}:${map[1]}:${map[2]}:${map[3]}`;
-    
+
     if (Sprites[k]) return;
     Sprites[k] = 'loading';
     getSprites(spriteSheet, [map]).then((result) => {
       if (result.length)
         setSprites((sprites) => {
-          sprites[k] = result[0];          
+          sprites[k] = result[0];
           return { ...sprites };
         });
     });

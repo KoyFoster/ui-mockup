@@ -1,6 +1,8 @@
-import { CSSProperties, useContext, useEffect } from 'react';
+import { CSSProperties, useContext, useEffect, useState } from 'react';
 import TransientPopup from 'src/app/popups/TransientPopup';
+import getPortrait from '../../assets/context/portraits';
 import { SoundControllerContext } from '../../assets/sounds';
+import { GameDataContext } from '../../Context/GameData';
 import { BattleStateContext } from './Context/BattleState';
 import {
   ConfirmTarget,
@@ -27,10 +29,16 @@ const BattleMenus = {
   'confirm-target': <ConfirmTarget></ConfirmTarget>,
 } as BattleMenus;
 
-const BattleMenu = ({style}: {style?: CSSProperties}) => {
+const BattleMenu = ({ style }: { style?: CSSProperties }) => {
+  const { party } = useContext(GameDataContext);
   const { menuNegative } = useContext(SoundControllerContext);
   const { menuState, setMenuState, toolTip } = useContext(BattleStateContext);
   const { renderMessages, addTransientMessage } = TransientPopup();
+  const [portrait, setPortrait] = useState(null as HTMLImageElement | null);
+
+  useEffect(() => {
+    getPortrait(party[3].name, setPortrait);
+  }, []);
 
   useEffect(() => {
     const onEscape = (e: KeyboardEvent) => {
@@ -50,10 +58,10 @@ const BattleMenu = ({style}: {style?: CSSProperties}) => {
       {renderMessages()}
       <div className="menu-container">
         <img
-          id="Portrait"
-          src="../assets/sprites/portrait.jpg"
-          alt="Portrait"
           className="portrait"
+          id="Portrait"
+          src={portrait?.src ? portrait.src : "../assets/sprites/portrait.jpg"}
+          alt="Portrait"
         />
         <div className='battle-menu-container' style={style}>
           {BattleMenus[menuState.menu]}
