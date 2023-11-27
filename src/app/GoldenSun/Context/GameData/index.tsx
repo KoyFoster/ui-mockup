@@ -79,7 +79,7 @@ const Djinns = () => {
           enabled: true,
           name: 'Solo',
           set: false,
-          setTo: 'Issac',
+          setTo: 'Isaac',
           standBy: -1,
         },
       ],
@@ -98,7 +98,7 @@ const Djinns = () => {
 const Team = () => {
   const members = useRef([
     {
-      name: 'Issac',
+      name: 'Isaac',
       hp: { cur: 83, max: 100 },
       pp: { cur: 31, max: 100 },
       disabled: false,
@@ -116,7 +116,7 @@ const Team = () => {
       disabled: false,
     },
     {
-      name: 'Mary',
+      name: 'Mia',
       hp: { cur: 83, max: 100 },
       pp: { cur: 31, max: 100 },
       disabled: false,
