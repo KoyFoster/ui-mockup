@@ -2,39 +2,12 @@ import MenuMove from '../../assets/sounds/fx/MenuMove.wav';
 import MenuPositive from '../../assets/sounds/fx/MenuPositive.wav';
 import MenuNegative from '../../assets/sounds/fx/MenuNegative.wav';
 import BattleTheme from '../../assets/sounds/bg/battle-theme.mp3';
-import { createContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useEffect, useMemo } from 'react';
 import VolumeSettings from './VolumeSettings';
 import { DEFAULT_VOLUME_PROPS } from './constants';
+import useVolumeData from './VolumeSettings/useVolumeData';
 
 // TODO (2023-03-25): Refactor this whole thing
-
-// VOLUME
-const VOLUME: Volume = {
-  properties: {
-    master: { key: 'master', label: 'Master', value: 0.5 },
-    music: { key: 'music', label: 'Music', value: 0.5 },
-    generalFX: { key: 'generalFX', label: 'General Sound Effects', value: 0.5 },
-    menuFX: { key: 'menuFX', label: 'Menu Sound Effects', value: 0.5 },
-    battleFX: { key: 'battleFX', label: 'Battle Sound Effects', value: 0.5 },
-  },
-  calls: {
-    props: undefined,
-    getMusic: function (this) {
-      if (!this.props) return 0.5;
-      return this.props?.master.value * this.props?.music.value;
-    },
-    getGeneralFX: function (this) {
-      if (!this.props) return 0.5;
-      return this.props.master.value * this.props.generalFX.value;
-    },
-    getMenuFX: function (this) {
-      if (!this.props) return 0.5;
-      return this.props.master.value * this.props.menuFX.value;
-    },
-  },
-};
-VOLUME.calls.props = VOLUME.properties;
-
 const useSoundControllerRefs = () => {
   const btRef = useMemo(() => new GameAudio(BattleTheme, 'BattleTheme'), []);
   // Menu FX
@@ -76,7 +49,7 @@ const SoundController = ({
   children: React.ReactNode | string;
 }) => {
   const soundController = useSoundControllerRefs();
-  const [volume, setVolume] = useState({ ...VOLUME });
+  const { volume, handleChange } = useVolumeData();
 
   useEffect(() => {
     soundController.battleTheme.volume = volume.calls.getMusic();
@@ -96,18 +69,7 @@ const SoundController = ({
       <VolumeSettings
         volume={volume.properties}
         defaultVolume={DEFAULT_VOLUME_PROPS}
-        onChange={(newVol, newVolProps) => {
-          setVolume((v) => {
-            if (newVol) v.properties[newVol.key].value = newVol.value;
-            else if (newVolProps) {
-              Object.keys(v.properties).forEach((key) => {
-                v.properties[key] = newVolProps[key];
-              });
-            }
-
-            return {...v};
-          });
-        }}
+        onChange={handleChange}
       />
       {children}
     </SoundControllerContext.Provider>
